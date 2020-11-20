@@ -15,7 +15,7 @@ function Welcome() {
 	}
 
 	return (
-		<Container fluid>
+		<Container fluid className="welcome-page">
 			<LeftLayers active={transition} />
 			<Row>
 				<Col xs={8} md={4} lg={1}>
