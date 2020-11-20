@@ -1,6 +1,6 @@
 @import "../../styles/variables.scss";
 
-.container-fluid {
+.login-page {
     position: relative;
     overflow: hidden;
     .row {
@@ -9,6 +9,9 @@
         align-items: center;
         justify-content: center;
         align-content: center;
+    }
+    .btn {
+        margin: 15px auto;
     }
 }
 

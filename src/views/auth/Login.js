@@ -14,7 +14,7 @@ function Login() {
   }
 
   return (
-    <Container fluid className="fade-in">
+    <Container fluid className="fade-in login-page">
       <DownLayers active={transition} />
       <Row>
         <Col xs={12}>
