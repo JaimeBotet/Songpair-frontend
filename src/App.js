@@ -1,9 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
-
-import Map from './routers/Map';
-import Auth from './routers/Auth';
-import Home from './routers/Home';
+import {Switch, Route } from 'react-router-dom';
 
 import HomeContainer from "./redux/containers/pages/HomeContainer";
 import LoginContainer from "./redux/containers/pages/LoginContainer";
@@ -17,30 +12,21 @@ function App() {
   return (
     <Router>
         <Switch>
-
-          <Route exact path={ROUTES.HOME}>
-            {/* <Home /> */}
+          <Route path={ROUTES.HOME}>
             <HomeContainer />
           </Route>
-
           <Route path={ROUTES.LOGIN}>
-            {/* <Auth /> */}
             <LoginContainer />
           </Route>
-
           <Route path={ROUTES.MAP}>
-            {/* <Map /> */}
             <MapContainer />
           </Route>
-
           <Route path={ROUTES.REGISTER}>
             <RegisterContainer />
           </Route>
-
           <Route path={ROUTES.CHAT}>
             <ChatContainer />
           </Route>
-
         </Switch>
       </Router>
   );
