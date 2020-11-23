@@ -1,7 +1,7 @@
 import React from 'react';
 import {Switch, Route } from 'react-router-dom';
 
-import HomeContainer from "./redux/containers/pages/HomeContainer";
+import WelcomeContainer from "./redux/containers/pages/WelcomeContainer";
 import LoginContainer from "./redux/containers/pages/LoginContainer";
 import RegisterContainer from "./redux/containers/pages/RegisterContainer";
 import MapContainer from "./redux/containers/pages/MapContainer";
@@ -14,7 +14,7 @@ function App() {
     <Router>
         <Switch>
           <Route path={ROUTES.HOME}>
-            <HomeContainer />
+            <WelcomeContainer />
           </Route>
           <Route path={ROUTES.LOGIN}>
             <LoginContainer />

@@ -1,152 +1,70 @@
-import RecipesTypes from "./recipes-types";
+import SongTypes from "./song-types";
 
-import { normalizeRecipes } from "../../schema/recipes-schema";
+import { normalizeSong } from "../../schema/song-schema";
 
-export const fetchRecipesRequest = () => ({
-  type: RecipesTypes.FETCH_RECIPES_REQUEST,
+export const fetchSongRequest = () => ({
+  type: SongTypes.FETCH_SONG_REQUEST,
 });
 
-export const fetchRecipesError = (errorMessage) => ({
-  type: RecipesTypes.FETCH_RECIPES_ERROR,
+export const fetchSongError = (errorMessage) => ({
+  type: SongTypes.FETCH_SONG_ERROR,
   payload: errorMessage,
 });
 
-export const fetchRecipesSuccess = ({ byID, ids }) => ({
-  type: RecipesTypes.FETCH_RECIPES_SUCCESS,
+export const fetchSongSuccess = (song) => ({
+  type: SongTypes.FETCH_SONG_SUCCESS,
+  payload: song,
+});
+
+export const songUpdating = () => ({
+  type: SongTypes.SONG_UPDATING,
+});
+
+export const songUpdatingError = (errorMessage) => ({
+  type: SongTypes.SONG_UPDATING_ERROR,
+  payload: errorMessage,
+});
+
+export const addSongLike = (songID) => ({
+  type: SongTypes.ADD_SONG_LIKE,
   payload: {
-    byID: byID,
-    ids: ids,
+    songID: songID,
+    like: true,
   },
 });
 
-export const fetchRecipeRequest = () => ({
-  type: RecipesTypes.FETCH_RECIPE_REQUEST,
-});
-
-export const fetchRecipeError = (errorMessage) => ({
-  type: RecipesTypes.FETCH_RECIPE_ERROR,
-  payload: errorMessage,
-});
-
-export const fetchRecipeSuccess = (recipe) => ({
-  type: RecipesTypes.FETCH_RECIPE_SUCCESS,
-  payload: recipe,
-});
-
-export const recipeUpdating = () => ({
-  type: RecipesTypes.RECIPE_UPDATING,
-});
-
-export const recipeUpdatingError = (errorMessage) => ({
-  type: RecipesTypes.RECIPE_UPDATING_ERROR,
-  payload: errorMessage,
-});
-
-export const addLocalRecipeComment = (recipeID, comment) => ({
-  type: RecipesTypes.ADD_LOCAL_RECIPE_COMMENT,
+export const removeSongLike = (songID) => ({
+  type: SongTypes.REMOVE_SONG_LIKE,
   payload: {
-    recipeID: recipeID,
-    comment: comment,
+    songID: songID,
+    like: false,
   },
 });
 
-export function fetchRecipes() {
-  return async function fetchRecipesThunk(dispatch) {
-    dispatch(fetchRecipesRequest());
 
-    const res = await fetch("http://localhost:4000/recipes", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).catch((error) => dispatch(fetchRecipesError(error.message)));
 
-    const recipesJson = await res
-      .json()
-      .catch((error) => dispatch(fetchRecipesError(error.message)));
+export function fetchSong() {
+  return async function fetchSongThunk(dispatch) {
+    dispatch(fetchSongRequest());
 
-    if (res.ok) {
-      const normalizedRecipes = normalizeRecipes(recipesJson.data);
-
-      dispatch(
-        fetchRecipesSuccess({
-          byID: normalizedRecipes.entities.recipes,
-          ids: normalizedRecipes.result,
-        }),
-      );
-    }
-  };
-}
-
-export function fetchRecipe(recipeID) {
-  return async function fetchRecipeThunk(dispatch) {
-    dispatch(fetchRecipeRequest());
-
-    const res = await fetch(`http://localhost:4000/recipes/${recipeID}`, {
+    const res = await fetch(`fetch_from_Spotify`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     }).catch((error) => {
       console.log(error);
-      dispatch(fetchRecipeError(error.message));
+      dispatch(fetchSongError(error.message));
     });
 
-    const recipeJson = await res.json();
+    const songJson = await res.json();
 
     if (res.ok) {
-      dispatch(fetchRecipeSuccess(recipeJson.data));
+      dispatch(fetchSongSuccess(songJson.data));
     } else {
-      dispatch(fetchRecipeError(recipeJson.error));
+      dispatch(fetchSongError(songJson.error));
     }
   };
 }
 
-export function addRecipeComment(recipeID, commentBody) {
-  return async function addRecipeCommentThunk(dispatch, getState) {
-    const token = getState().user.currentUser.token;
 
-    if (token) {
-      const res = await fetch(
-        `http://localhost:4000/recipes/${recipeID}/comment`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            commentBody: commentBody,
-          }),
-        },
-      ).catch((error) => dispatch(recipeUpdatingError(error.message)));
-
-      const resJson = await res
-        .json()
-        .catch((error) => dispatch(recipeUpdatingError(error.message)));
-
-      if (res.ok) {
-        try {
-          dispatch(
-            addLocalRecipeComment(recipeID, {
-              _id: resJson.data._id,
-              body: resJson.data.body,
-              recipe: resJson.data.recipe,
-              author: {
-                _id: resJson.data.author._id,
-                name: resJson.data.author.name,
-                lastname: resJson.data.author.lastname,
-              },
-            }),
-          );
-        } catch (error) {
-          dispatch(recipeUpdatingError(error.message));
-        }
-      } else {
-        dispatch(recipeUpdatingError(resJson.error));
-      }
-    } else {
-      dispatch(recipeUpdatingError("Missing auth token"));
-    }
-  };
-}
