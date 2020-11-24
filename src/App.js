@@ -11,25 +11,23 @@ import ROUTES from "./utils/routes";
 
 function App() {
   return (
-    <Router>
-        <Switch>
-          <Route path={ROUTES.HOME}>
-            <WelcomeContainer />
-          </Route>
-          <Route path={ROUTES.LOGIN}>
-            <LoginContainer />
-          </Route>
-          <Route path={ROUTES.MAP}>
-            <MapContainer />
-          </Route>
-          <Route path={ROUTES.REGISTER}>
-            <RegisterContainer />
-          </Route>
-          <Route path={ROUTES.CHAT}>
-            <ChatContainer />
-          </Route>
-        </Switch>
-      </Router>
+      <Switch>
+        <Route path={ROUTES.HOME}>
+          <WelcomeContainer />
+        </Route>
+        <Route path={ROUTES.LOGIN}>
+          <LoginContainer />
+        </Route>
+        <Route path={ROUTES.MAP}>
+          <MapContainer />
+        </Route>
+        <Route path={ROUTES.REGISTER}>
+          <RegisterContainer />
+        </Route>
+        <Route path={ROUTES.CHAT}>
+          <ChatContainer />
+        </Route>
+      </Switch>
   );
 }
 
