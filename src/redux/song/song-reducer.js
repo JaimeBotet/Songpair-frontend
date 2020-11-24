@@ -10,7 +10,7 @@ const SongInitialState = {
   id: [],
 };
 
-function songReducer(state = SongInitialState, action) {
+const SongReducer = (state = SongInitialState, action) => {
   switch (action.type) {
     case SongTypes.FETCH_SONG_REQUEST: {
       return {

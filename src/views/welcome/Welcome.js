@@ -5,8 +5,8 @@ import './Welcome.scss';
 import HeaderContainer from "../../redux/containers/components/HeaderContainer";
 
 import Footer from "../../components/Footer/Footer";
-import WelcomeHeader from "../../components/WelcomeHeader/WelcomeHeader";
-import WelcomeEmptyContent from "../../components/WelcomeEmptyContent/WelcomeEmptyContent";
+// import WelcomeHeader from "../../components/WelcomeHeader/WelcomeHeader";
+// import WelcomeEmptyContent from "../../components/WelcomeEmptyContent/WelcomeEmptyContent";
 
 function Welcome({
   song,
