@@ -1,7 +1,7 @@
 .map-page {
     position: relative;
     overflow: hidden;
-    .row {
+    .map-row {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -10,4 +10,29 @@
     .map-container {
         height: 90vh;
     }
+    .leaflet-popup-content-wrapper {
+        width: 270px;
+        background: #000;
+        color: #fff;
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 24px;
+        border-radius: 0px;
+  }
+  .leaflet-popup-tip {
+    background-color: #000;
+  }
+  .album-img {
+      width: 40px;
+  }
+  .avatar {
+      width: 30px;
+      border-radius: 50%;
+  }
+  .artist-name {
+      font-weight: 300;
+  }
+  .like-icon {
+      margin-top: 10px;
+  }
 }
