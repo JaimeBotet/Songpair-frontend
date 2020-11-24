@@ -1,13 +1,11 @@
 import { normalize, schema } from "normalizr";
 
-const recipe = new schema.Entity(
-  "recipes",
-  {},
-  {
-    idAttribute: "_id",
-  },
-);
+const user = new schema.Entity('users');
 
-export function normalizeRecipes(recipes) {
-  return normalize(recipes, [recipe]);
+const song = new schema.Entity('song',{
+  publisher: user
+});
+
+export function normalizeSong(songJSON) {
+  return normalize(songJSON, [song]);
 }
