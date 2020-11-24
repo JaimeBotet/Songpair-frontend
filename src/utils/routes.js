@@ -1,9 +1,9 @@
 const ROUTES = {
     HOME: "/",
     LOGIN: "/login",
-    REGISTER: "/register",
+    REGISTER: "/signup",
     MAP: "/map",
     CHAT: "/chat"
   };
-  
-  export default ROUTES;
+
+export default ROUTES;
