@@ -6,7 +6,7 @@ import {
 
 import { fetchSong } from "../../song/song-actions";
 
-import Welcome from "../../../views/welcome/Welcome";
+import Welcome from "../../../views/home/Welcome";
 
 const mapStateToProps = (state) => ({
   songState: songStateSelector(state),

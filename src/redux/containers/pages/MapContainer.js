@@ -1,35 +1,19 @@
-// import { connect } from "react-redux";
-// import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
-// import {
-//   makeRecipeSelector,
-//   recipesStateSelector,
-// } from "../../recipes/recipes-selectors";
+import {
+  songStateSelector,
+} from "../../song/song-selectors";
 
-// import { addRecipeComment, fetchRecipe } from "../../recipes/recipes-actions";
-// import { currentUserStateSelector } from "../../user/user-selectors";
-// import Recipe from "../../../pages/Recipe/Recipe";
+import { fetchSong } from "../../song/song-actions";
 
-// const makeMapStateToProps = () => {
-//   const recipeSelector = makeRecipeSelector();
+import Map from "../../../views/map/Map";
 
-//   return (state, ownProps) => {
-//     const recipeID = ownProps.match.params.recipeID;
+const mapStateToProps = (state) => ({
+  songState: songStateSelector(state),
+});
 
-//     return {
-//       recipe: recipeSelector(state, recipeID),
-//       recipeState: recipesStateSelector(state),
-//       currentUserState: currentUserStateSelector(state),
-//     };
-//   };
-// };
+const mapDispatchToProps = (dispatch) => ({
+  fetchSong: () => dispatch(fetchSong()),
+});
 
-// const mapDispatchToProps = (dispatch) => ({
-//   fetchRecipe: (recipeID) => dispatch(fetchRecipe(recipeID)),
-//   addRecipeComment: (recipeID, commentBody) =>
-//     dispatch(addRecipeComment(recipeID, commentBody)),
-// });
-
-// export default withRouter(
-//   connect(makeMapStateToProps, mapDispatchToProps)(Recipe),
-// );
+export default connect(mapStateToProps, mapDispatchToProps)(Map);

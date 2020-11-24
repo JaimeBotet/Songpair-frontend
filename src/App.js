@@ -12,7 +12,7 @@ import ROUTES from "./utils/routes";
 function App() {
   return (
       <Switch>
-        <Route path={ROUTES.HOME}>
+        <Route path={ROUTES.HOME} exact>
           <WelcomeContainer />
         </Route>
         <Route path={ROUTES.LOGIN}>
