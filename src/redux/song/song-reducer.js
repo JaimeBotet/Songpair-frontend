@@ -35,7 +35,7 @@ function songReducer(state = SongInitialState, action) {
         songLoading: false,
         songFetched: true,
         songLoadingError: null,
-        //No idea what this do
+        //No idea what this snippet of code does
         byID: {
           ...state.byID,
           [songID]: {

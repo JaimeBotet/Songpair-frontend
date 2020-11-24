@@ -2,7 +2,7 @@ import { createSelector } from "reselect";
 
 export const selectSongState = (state) => state.song;
 
-export const songSelector = createSelector(
+export const songStateSelector = createSelector(
   [selectSongState],
   (songState) => songState,
 );

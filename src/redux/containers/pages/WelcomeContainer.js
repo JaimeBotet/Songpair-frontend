@@ -1,21 +1,19 @@
 import { connect } from "react-redux";
 
 import {
-  songSelector,
   songStateSelector,
-} from "../../recipes/recipes-selectors";
+} from "../../song/song-selectors";
 
-import { fetchRecipes } from "../../recipes/recipes-actions";
+import { fetchSong } from "../../song/song-actions";
 
 import Welcome from "../../../views/welcome/Welcome";
 
 const mapStateToProps = (state) => ({
-  recipes: recipesSelector(state),
-  recipesState: recipesStateSelector(state),
+  songState: songStateSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchRecipes: () => dispatch(fetchRecipes()),
+  fetchSong: () => dispatch(fetchSong()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Welcome);
