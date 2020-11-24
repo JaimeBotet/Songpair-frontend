@@ -1,17 +1,17 @@
-// import { connect } from "react-redux";
+import { connect } from "react-redux";
 
-// import { currentUserStateSelector } from "../../user/user-selectors";
-// import { signUp } from "../../user/user-actions";
+import { currentUserStateSelector } from "../../user/user-selectors";
+import { signInForm } from "../../user/user-actions";
 
-// import Signup from "../../../views/Signup/Signup";
+import Signup from "../../../views/auth/Register";
 
-// const mapStateToProps = (state) => ({
-//   currentUserState: currentUserStateSelector(state),
-// });
+const mapStateToProps = (state) => ({
+  currentUserState: currentUserStateSelector(state),
+});
 
-// const mapDispatchToProps = (dispatch) => ({
-//   signup: ({ name, lastname, email, password }) =>
-//     dispatch(signUp({ name, lastname, email, password })),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  fetchFormData: (code) =>
+    dispatch(signInForm(code)),
+});
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Signup);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
