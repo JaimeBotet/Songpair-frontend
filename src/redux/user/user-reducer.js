@@ -8,6 +8,9 @@ export const UserInitialState = {
   signUpError: null,
   isSigningOut: false,
   signOutError: null,
+  signInForm: null,
+  signInFormLoad: null,
+  signInFormError: null,
   currentUser: {
     name: null,
     lastname: null,
@@ -44,6 +47,28 @@ const UserReducer = (state = UserInitialState, action) => {
         ...state,
         isSigningUp: false,
         signUpError: action.payload,
+      };
+    }
+    case UserTypes.FORM_REQUEST: {
+      return {
+        ...state,
+        signInFormLoad: true,
+        signInFormError: null,
+      };
+    }
+    case UserTypes.FORM_SUCCESS: {
+      return {
+        ...state,
+        signInFormLoad: false,
+        signInForm: action.payload
+      };
+    }
+    case UserTypes.FORM_ERROR: {
+      return {
+        ...state,
+        signInForm: null,
+        signInFormLoad: false,
+        signInFormError: action.payload,
       };
     }
     case UserTypes.LOGIN_REQUEST: {
