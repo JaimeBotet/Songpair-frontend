@@ -1,20 +1,16 @@
 import { Switch, Route } from 'react-router-dom';
-import Map from '../views/auth/Login';
+import MapView from '../views/map/Map';
 
-function Auth() {
+function Map() {
   return (
     <Switch>
 
-      <Route exact path="/login">
-        <Login />
-      </Route>
-
-      <Route exact path="/login/register">
-        <Register />
+      <Route exact path="/map">
+        <MapView />
       </Route>
 
     </Switch>
   );
 }
 
-export default Auth;
+export default Map;
