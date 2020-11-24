@@ -1,16 +1,17 @@
 import { useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import { Container, Row, Col, Form} from 'react-bootstrap';
-import DownLayers from '../components/Transition/DownLayers'
+import DownLayers from '../components/Transition/DownLayers';
+import { signUpRedirect } from '../../config/config';
 import './Login.scss';
 
 function Login() {
   const [transition, setTransition] = useState(false);
   const history = useHistory();
 
-	const handleClick = () => {
+	const handleSignUp = () => {
 		setTransition(true);
-		setTimeout(() => history.push("/login/register"), 1500);
+		setTimeout(() => window.location = signUpRedirect, 1500);
   }
 
   return (
@@ -36,7 +37,7 @@ function Login() {
             Don't have one? <span
             className="text-primary"
             role="button"
-            onClick={handleClick}
+            onClick={handleSignUp}
           >
             Sign up
           </span>
