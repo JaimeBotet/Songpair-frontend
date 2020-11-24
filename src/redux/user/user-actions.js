@@ -1,7 +1,22 @@
 import UserTypes from "./user-types";
+import { signInFormURI } from "../../config/config";
 
 export const resetStoreAndLogOut = () => ({
   type: UserTypes.RESET_STORE_AND_LOG_OUT,
+});
+
+export const signInFormRequest = () => ({
+  type: UserTypes.FORM_REQUEST,
+});
+
+export const signInFormError = (message) => ({
+  type: UserTypes.FORM_ERROR,
+  payload: message,
+});
+
+export const signInFormSuccess = (form) => ({
+  type: UserTypes.FORM_SUCCESS,
+  payload: form
 });
 
 export const loginRequest = () => ({
@@ -145,6 +160,32 @@ export function signout() {
       }
     } else {
       dispatch(signoutError("Missing auth token"));
+    }
+  };
+}
+
+export function signInForm(code) {
+  return async function signInFormThunk(dispatch, getState) {
+
+    dispatch(signInFormRequest());
+
+    const res = await fetch(`${signInFormURI}?code=${code}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).catch((error) => dispatch(signInFormError(error.message)));
+
+    const resJson = await res
+      .json()
+      .catch((error) => dispatch(signInFormError(error.message)));
+
+    if (res.ok) {
+      dispatch(
+        signInFormSuccess(resJson.data.data)
+      );
+    } else {
+      dispatch(signInFormError(resJson.error));
     }
   };
 }
