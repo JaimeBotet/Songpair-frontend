@@ -1,71 +1,45 @@
-import RecipesTypes from "./recipes-types";
+import SongTypes from "./song-types";
 
-const RecipesInitialState = {
-  recipesLoading: false,
-  recipesLoadingError: null,
-  recipesFetched: false,
-  recipeLoading: false,
-  recipeLoadingError: null,
-  recipeFetched: false,
-  recipeUpdating: false,
-  recipeUpdatingError: null,
-  byID: {},
-  ids: [],
+const SongInitialState = {
+  songLoading: false,
+  songLoadingError: null,
+  songFetched: false,
+  songUpdating: false,
+  songUpdatingError: null,
+  songLike: false,
+  id: [],
 };
 
-function RecipesReducer(state = RecipesInitialState, action) {
+function songReducer(state = SongInitialState, action) {
   switch (action.type) {
-    case RecipesTypes.FETCH_RECIPES_REQUEST: {
+    case SongTypes.FETCH_SONG_REQUEST: {
       return {
         ...state,
-        recipesLoading: true,
-        recipesLoadingError: null,
+        songLoading: true,
+        songLoadingError: null,
+        songUpdatingError: null,
       };
     }
-    case RecipesTypes.FETCH_RECIPES_ERROR: {
+    case SongTypes.FETCH_SONG_ERROR: {
       return {
         ...state,
-        recipesLoading: false,
-        recipesLoadingError: action.payload,
+        songLoading: false,
+        songLoadingError: action.payload,
       };
     }
-    case RecipesTypes.FETCH_RECIPES_SUCCESS: {
-      return {
-        ...state,
-        recipesLoading: false,
-        recipesFetched: true,
-        recipesLoadingError: null,
-        byID: action.payload.byID,
-        ids: action.payload.ids,
-      };
-    }
-    case RecipesTypes.FETCH_RECIPE_REQUEST: {
-      return {
-        ...state,
-        recipeLoading: true,
-        recipeLoadingError: null,
-        recipeUpdatingError: null,
-      };
-    }
-    case RecipesTypes.FETCH_RECIPE_ERROR: {
-      return {
-        ...state,
-        recipeLoading: false,
-        recipeLoadingError: action.payload,
-      };
-    }
-    case RecipesTypes.FETCH_RECIPE_SUCCESS: {
-      const recipeID = action.payload._id;
+    case SongTypes.FETCH_SONG_SUCCESS: {
+      const songID = action.payload._id;
 
       return {
         ...state,
-        recipeLoading: false,
-        recipeFetched: true,
-        recipeLoadingError: null,
+        songLoading: false,
+        songFetched: true,
+        songLoadingError: null,
+        //No idea what this do
         byID: {
           ...state.byID,
-          [recipeID]: {
-            ...state.byID[recipeID],
+          [songID]: {
+            ...state.byID[songID],
             comments: [...action.payload.comments],
             author: {
               ...action.payload.author,
@@ -75,30 +49,45 @@ function RecipesReducer(state = RecipesInitialState, action) {
         },
       };
     }
-    case RecipesTypes.RECIPE_UPDATING: {
+    case SongTypes.SONG_UPDATING: {
       return {
         ...state,
-        recipeUpdating: true,
-        recipeUpdatingError: null,
+        songUpdating: true,
+        songUpdatingError: null,
       };
     }
-    case RecipesTypes.RECIPE_UPDATING_ERROR: {
+    case SongTypes.SONG_UPDATING_ERROR: {
       return {
         ...state,
-        recipeUpdatingError: action.payload,
+        songUpdating: false,
+        songUpdatingError: action.payload,
       };
     }
-    case RecipesTypes.ADD_LOCAL_RECIPE_COMMENT: {
-      const recipeID = action.payload.recipeID;
+    case SongTypes.ADD_SONG_LIKE: {
+      return {
+        ...state,
+        songLike: true,
+      };
+    }
+    case SongTypes.REMOVE_SONG_LIKE: {
+      return {
+        ...state,
+        songLike: false,
+      };
+    }
+
+    //Recicled from example code... might be useful?
+    case SongTypes.ADD_LOCAL_SONG_COMMENT: {
+      const songID = action.payload.songID;
       const newComment = action.payload.comment;
 
       return {
         ...state,
         byID: {
           ...state.byID,
-          [recipeID]: {
-            ...state.byID[recipeID],
-            comments: [newComment, ...state.byID[recipeID].comments],
+          [songID]: {
+            ...state.byID[songID],
+            comments: [newComment, ...state.byID[songID].comments],
           },
         },
       };
@@ -109,4 +98,4 @@ function RecipesReducer(state = RecipesInitialState, action) {
   }
 }
 
-export default RecipesReducer;
+export default SongReducer;
