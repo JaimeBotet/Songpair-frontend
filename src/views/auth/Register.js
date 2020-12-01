@@ -92,10 +92,10 @@ function Register({
         <Col xs={12}>
           <h1 className="text-white">Sign up</h1>
         </Col>
-        {(isSigningUp || ( signInFormLoad && !signInForm)) &&
+        { (isSigningUp || ( signInFormLoad && !signInForm)) && (
             <Spinner animation="border" variant="primary" />
-        }
-        {signInForm && !isSigningUp && !signUpError &&
+        )}
+        { signInForm && !isSigningUp && (
           <Col xs={8} md={5} lg={3} className="text-center text-white">
             <Form.Control type="file" id="avatar" className="d-none"></Form.Control>
               <label htmlFor="avatar">
@@ -135,6 +135,7 @@ function Register({
               onClick={locationHandle}
             />
             {formError && <Col xs={12} className="badge badge-danger">{formError}</Col>}
+            {signUpError && <Col xs={12} className="badge badge-danger">{signUpError}</Col>}
             <div
               className="text-white btn btn-primary w-100"
               onClick={signUpHandle}
@@ -142,11 +143,10 @@ function Register({
               Register
             </div>
           </Col>
-        }
-        { (signInFormError || signUpError) &&
+        )}
+        { signInFormError && (
           <>
-            {signInFormError && <Col xs={12} className="badge badge-danger">{signInFormError}</Col>}
-            {signUpError && <Col xs={12} className="badge badge-danger">{signUpError}</Col>}
+            <Col xs={12} className="badge badge-danger">{signInFormError}</Col>}
             <Col xs={8} md={5} lg={3}>
               <Link to={ROUTES.LOGIN}
                 className="btn btn-primary w-100"
@@ -155,7 +155,7 @@ function Register({
               </Link>
             </Col>
           </>
-        }
+        )}
       </Row>
     </Container>
   );
