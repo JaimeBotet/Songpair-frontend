@@ -142,6 +142,16 @@ function Register({
             >
               Register
             </div>
+            <Col xs={12}>
+              <p className="text-center text-secondary mt-2">
+                Got an account? <Link to={ROUTES.LOGIN}
+                className="text-primary"
+                role="button"
+              >
+                Sign In
+              </Link>
+              </p>
+            </Col>
           </Col>
         )}
         { signInFormError && (
