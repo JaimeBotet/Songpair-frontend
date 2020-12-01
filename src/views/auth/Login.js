@@ -75,7 +75,7 @@ function Login({
                 className="text-white btn btn-primary w-100"
                 onClick={loginHandle}
               >
-                  Log in
+                Log in
               </div>
               {formError && <Col xs={12} className="badge badge-danger">{formError}</Col>}
               {loginError && <Col xs={12} className="badge badge-danger">{loginError}</Col>}
