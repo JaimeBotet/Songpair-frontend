@@ -156,7 +156,7 @@ function Register({
         )}
         { signInFormError && (
           <>
-            <Col xs={12} className="badge badge-danger">{signInFormError}</Col>}
+            <Col xs={12} className="badge badge-danger">{signInFormError}</Col>
             <Col xs={8} md={5} lg={3}>
               <Link to={ROUTES.LOGIN}
                 className="btn btn-primary w-100"
