@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { Container, Row, Col, Form} from 'react-bootstrap';
+import { Container, Row, Col, Form, Spinner} from 'react-bootstrap';
 import DownLayers from '../components/Transition/DownLayers';
 import { signUpRedirect } from '../../config/config';
 import './Login.scss';
@@ -49,44 +49,50 @@ function Login({
         <Col xs={12}>
           <h1 className="text-white">Soundpair</h1>
         </Col>
-        <Col xs={9} md={5} lg={3} className="spotify-btn my-4">
-          Log in with Spotify
-        </Col>
-        <Col xs={12}>
-          <p className="text-center text-secondary">Or use your account</p>
-        </Col>
-        <Col xs={8} md={5} lg={3}>
-          <Form.Control
-            type="email"
-            placeholder="Email"
-            className="mb-1"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <div
-            className="text-white btn btn-primary w-100"
-            onClick={loginHandle}
-          >
-              Log in
-          </div>
-          {formError && <Col xs={12} className="badge badge-danger">{formError}</Col>}
-          {loginError && <Col xs={12} className="badge badge-danger">{loginError}</Col>}
-        </Col>
-        <Col xs={12}>
-          <p className="text-center text-secondary mt-2">
-            Don't have one? <span
-            className="text-primary"
-            role="button"
-            onClick={handleSignUp}
-          >
-            Sign up
-          </span>
-          </p>
-        </Col>
+        {isLoggingIn ? (
+          <Spinner animation="border" variant="primary" />
+        ) : (
+          <>
+            <Col xs={9} md={5} lg={3} className="spotify-btn my-4">
+              Log in with Spotify
+            </Col>
+            <Col xs={12}>
+              <p className="text-center text-secondary">Or use your account</p>
+            </Col>
+            <Col xs={8} md={5} lg={3}>
+              <Form.Control
+                type="email"
+                placeholder="Email"
+                className="mb-1"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <div
+                className="text-white btn btn-primary w-100"
+                onClick={loginHandle}
+              >
+                  Log in
+              </div>
+              {formError && <Col xs={12} className="badge badge-danger">{formError}</Col>}
+              {loginError && <Col xs={12} className="badge badge-danger">{loginError}</Col>}
+            </Col>
+            <Col xs={12}>
+              <p className="text-center text-secondary mt-2">
+                Don't have one? <span
+                className="text-primary"
+                role="button"
+                onClick={handleSignUp}
+              >
+                Sign up
+              </span>
+              </p>
+            </Col>
+          </>
+        )}
       </Row>
   </Container>
   );
