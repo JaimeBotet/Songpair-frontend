@@ -110,7 +110,7 @@ export function login({ email, password }) {
   return async function loginThunk(dispatch) {
     dispatch(loginRequest());
 
-    const res = await fetch("http://localhost:4000/user/login", {
+    const res = await fetch(loginURI, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -129,8 +129,6 @@ export function login({ email, password }) {
       dispatch(
         loginSuccess({
           name: resJson.data.user.name,
-          lastname: resJson.data.user.lastname,
-          email: resJson.data.user.email,
           token: resJson.data.token,
         }),
       );
