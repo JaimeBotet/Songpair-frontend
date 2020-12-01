@@ -52,6 +52,7 @@ const UserReducer = (state = UserInitialState, action) => {
         ...state,
         signInFormLoad: true,
         signInFormError: null,
+        signUpError: null
       };
     }
     case UserTypes.FORM_SUCCESS: {
