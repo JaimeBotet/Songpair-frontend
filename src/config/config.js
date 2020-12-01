@@ -8,3 +8,4 @@ export const signUpRedirect = apiDomain + "signup";
 
 // New sign up form request
 export const signInFormURI = apiDomain + "signup/spotify";
+export const signUpURI = apiDomain + "signup";
