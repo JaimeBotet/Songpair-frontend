@@ -1,5 +1,5 @@
 import UserTypes from "./user-types";
-import { signInFormURI, signUpURI } from "../../config/config";
+import { signInFormURI, signUpURI, loginURI } from "../../config/config";
 
 export const resetStoreAndLogOut = () => ({
   type: UserTypes.RESET_STORE_AND_LOG_OUT,
