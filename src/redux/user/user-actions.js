@@ -1,5 +1,5 @@
 import UserTypes from "./user-types";
-import { signInFormURI } from "../../config/config";
+import { signInFormURI, signUpURI } from "../../config/config";
 
 export const resetStoreAndLogOut = () => ({
   type: UserTypes.RESET_STORE_AND_LOG_OUT,
@@ -51,8 +51,6 @@ export const signupSuccess = ({ name, lastname, email, token }) => ({
   type: UserTypes.SIGNUP_SUCCESS,
   payload: {
     name: name,
-    lastname: lastname,
-    email: email,
     token: token,
   },
 });
@@ -70,20 +68,24 @@ export const signoutSuccess = () => ({
   type: UserTypes.SIGNOUT_SUCCESS,
 });
 
-export function signUp({ name, lastname, email, password }) {
+export function signUp({ name, email, password, avatar, token, refreshToken, location, spotifyID }) {
   return async function signUpThunk(dispatch) {
     dispatch(signUpRequest());
 
-    const res = await fetch("http://localhost:4000/user/sign-up", {
+    const res = await fetch(signUpURI, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         name,
-        lastname,
         email,
         password,
+        avatar,
+        token,
+        refreshToken,
+        location,
+        spotifyID
       }),
     }).catch((error) => dispatch(signUpError(error.message)));
 
@@ -95,8 +97,6 @@ export function signUp({ name, lastname, email, password }) {
       dispatch(
         signupSuccess({
           name: resJson.data.user.name,
-          lastname: resJson.data.user.lastname,
-          email: resJson.data.user.email,
           token: resJson.data.token,
         }),
       );
