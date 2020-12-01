@@ -36,8 +36,6 @@ const UserReducer = (state = UserInitialState, action) => {
         loginError: null,
         currentUser: {
           name: action.payload.name,
-          lastname: action.payload.lastname,
-          email: action.payload.email,
           token: action.payload.token,
         },
       };
