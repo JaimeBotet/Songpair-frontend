@@ -5,7 +5,6 @@ export const apiDomain = "http://localhost:8080/";
 export const signUpRedirect = apiDomain + "signup";
 
 // API Requests
-
-// New sign up form request
 export const signInFormURI = apiDomain + "signup/spotify";
 export const signUpURI = apiDomain + "signup";
+export const loginURI = apiDomain + "login";
