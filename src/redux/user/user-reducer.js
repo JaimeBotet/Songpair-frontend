@@ -13,8 +13,6 @@ export const UserInitialState = {
   signInFormError: null,
   currentUser: {
     name: null,
-    lastname: null,
-    email: null,
     token: null,
   },
 };
