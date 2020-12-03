@@ -34,7 +34,7 @@ function Dashboard({
               <GeoFill color="white" size={100}/>
             </Link>
           </Col>
-          <Col xs={12} classname="mt-4">
+          <Col xs={12} className="mt-4">
             <Link to={ROUTES.CHAT}>
               <ChatLeftDotsFill color="white" size={100}/>
             </Link>
