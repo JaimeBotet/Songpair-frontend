@@ -14,6 +14,7 @@ export const UserInitialState = {
   currentUser: {
     name: null,
     token: null,
+    avatar: null,
   },
 };
 
@@ -35,6 +36,7 @@ const UserReducer = (state = UserInitialState, action) => {
         currentUser: {
           name: action.payload.name,
           token: action.payload.token,
+          avatar: action.payload.avatar,
         },
       };
     }
@@ -83,9 +85,8 @@ const UserReducer = (state = UserInitialState, action) => {
         loginError: null,
         currentUser: {
           name: action.payload.name,
-          lastname: action.payload.lastname,
-          email: action.payload.email,
           token: action.payload.token,
+          avatar: action.payload.avatar,
         },
       };
     }

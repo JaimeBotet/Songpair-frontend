@@ -28,13 +28,12 @@ export const loginError = (message) => ({
   payload: message,
 });
 
-export const loginSuccess = ({ name, lastname, email, token }) => ({
+export const loginSuccess = ({ name, token, avatar }) => ({
   type: UserTypes.LOGIN_SUCCESS,
   payload: {
     name: name,
-    lastname: lastname,
-    email: email,
     token: token,
+    avatar: avatar,
   },
 });
 
@@ -47,11 +46,12 @@ export const signUpError = (message) => ({
   payload: message,
 });
 
-export const signupSuccess = ({ name, lastname, email, token }) => ({
+export const signupSuccess = ({ name, token, avatar }) => ({
   type: UserTypes.SIGNUP_SUCCESS,
   payload: {
     name: name,
     token: token,
+    avatar: avatar,
   },
 });
 
@@ -98,6 +98,7 @@ export function signUp({ name, email, password, avatar, token, refreshToken, loc
         signupSuccess({
           name: resJson.data.user.name,
           token: resJson.data.token,
+          avatar: resJson.data.user.avatar,
         }),
       );
     } else {
@@ -130,6 +131,7 @@ export function login({ email, password }) {
         loginSuccess({
           name: resJson.data.user.name,
           token: resJson.data.token,
+          avatar: resJson.data.user.avatar,
         }),
       );
     } else {
