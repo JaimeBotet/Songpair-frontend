@@ -1,6 +1,8 @@
 // API domain URL
 export const apiDomain = "http://localhost:8080/";
 
+// export const AppDomain = "http://localhost:3000/"
+
 // API sign up redirection
 export const signUpRedirect = apiDomain + "signup";
 

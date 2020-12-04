@@ -7,11 +7,17 @@ import ROUTES from "../../utils/routes";
 
 function Dashboard({
   currentUserState: { currentUser, isAuthenticated } = {},
+  logout
 }) {
 
   // Redirect if not logged
   if (!isAuthenticated) {
     return <Redirect to={ROUTES.LOGIN} />;
+  }
+
+   // Logout handler
+   const logoutHandler = () => {
+    logout();
   }
 
   return (
@@ -21,7 +27,7 @@ function Dashboard({
             <div className="logo">Songpair</div>
           </Col>
           <Col className="text-right">
-            <Power size={25} />
+            <Power size={25} onClick={logoutHandler}/>
           </Col>
           <Col xs={12} className="text-center">
             <img className="avatar" src={currentUser.avatar} alt="user avatar"></img>
