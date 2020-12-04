@@ -13,9 +13,8 @@ export const UserInitialState = {
   signInFormError: null,
   currentUser: {
     name: null,
-    lastname: null,
-    email: null,
     token: null,
+    avatar: null,
   },
 };
 
@@ -36,9 +35,8 @@ const UserReducer = (state = UserInitialState, action) => {
         loginError: null,
         currentUser: {
           name: action.payload.name,
-          lastname: action.payload.lastname,
-          email: action.payload.email,
           token: action.payload.token,
+          avatar: action.payload.avatar,
         },
       };
     }
@@ -54,6 +52,7 @@ const UserReducer = (state = UserInitialState, action) => {
         ...state,
         signInFormLoad: true,
         signInFormError: null,
+        signUpError: null
       };
     }
     case UserTypes.FORM_SUCCESS: {
@@ -86,9 +85,8 @@ const UserReducer = (state = UserInitialState, action) => {
         loginError: null,
         currentUser: {
           name: action.payload.name,
-          lastname: action.payload.lastname,
-          email: action.payload.email,
           token: action.payload.token,
+          avatar: action.payload.avatar,
         },
       };
     }

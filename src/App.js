@@ -5,7 +5,8 @@ import WelcomeContainer from "./redux/containers/pages/WelcomeContainer";
 import LoginContainer from "./redux/containers/pages/LoginContainer";
 import RegisterContainer from "./redux/containers/pages/RegisterContainer";
 import MapContainer from "./redux/containers/pages/MapContainer";
-import ChatContainer from "./redux/containers/pages/ChatContainer";
+import DashboardContainer from "./redux/containers/pages/DashboardContainer";
+// import ChatContainer from "./redux/containers/pages/ChatContainer";
 
 import ROUTES from "./utils/routes";
 
@@ -18,6 +19,9 @@ function App() {
         <Route path={ROUTES.LOGIN}>
           <LoginContainer />
         </Route>
+        <Route path={ROUTES.DASHBOARD}>
+          <DashboardContainer />
+        </Route>
         <Route path={ROUTES.MAP}>
           <MapContainer />
         </Route>
@@ -25,7 +29,7 @@ function App() {
           <RegisterContainer />
         </Route>
         <Route path={ROUTES.CHAT}>
-          <ChatContainer />
+          {/* <ChatContainer /> */}
         </Route>
       </Switch>
   );
