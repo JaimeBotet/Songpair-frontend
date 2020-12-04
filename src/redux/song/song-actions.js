@@ -1,6 +1,6 @@
 import SongTypes from "./song-types";
 
-import { normalizeSong } from "../../schema/song-schema";
+// import { normalizeSong } from "../../schema/song-schema";
 
 export const fetchSongRequest = () => ({
   type: SongTypes.FETCH_SONG_REQUEST,

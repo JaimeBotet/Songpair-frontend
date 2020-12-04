@@ -1,10 +1,10 @@
 // API domain URL
 export const apiDomain = "http://localhost:8080/";
 
-export const AppDomain = "http://localhost:3000/"
+// export const AppDomain = "http://localhost:3000/"
 
 // API sign up redirection
-export const signUpRedirect = AppDomain + "signup";
+export const signUpRedirect = apiDomain + "signup";
 
 // API Requests
 export const signInFormURI = apiDomain + "signup/spotify";
