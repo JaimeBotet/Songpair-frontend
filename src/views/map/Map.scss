@@ -22,8 +22,21 @@
   .leaflet-popup-tip {
     background-color: #000;
   }
+  .username-container {
+    display: flex;
+    align-items: center;
+    padding-left: 25px;
+    font-family: Impact;
+    font-size: 16px;
+    font-weight: 400;
+  }
   .album-img {
       width: 40px;
+  }
+  .music-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .avatar {
       width: 30px;

@@ -16,46 +16,49 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-function Marker(props) {
-    const {lat, long} = props
-    return (
-      <MarkerIcon position={[lat, long]} >
-          <Popup>
-              <Row className="mb-2">
-                  <Col xs={1}>
-                    <img
-                        src="https://i0.wp.com/365webresources.com/wp-content/uploads/2016/09/FREE-PROFILE-AVATARS.png?resize=502%2C494&ssl=1"
-                        className="avatar"
-                        alt="user avatar"
+function Marker({user}) {
+  const long = user.location.coordinates[0]
+  const lat = user.location.coordinates[1]
+  const { name, avatar, currentSong } = user;
+
+  return (
+    <MarkerIcon position={[lat, long]} >
+        <Popup>
+            <Row className="mb-2">
+                <Col xs={1}>
+                  <img
+                      src={avatar}
+                      className="avatar"
+                      alt="user avatar"
+                  />
+                </Col>
+                <Col xs={10} className="username-container">
+                  <span>{name}</span>
+                </Col>
+            </Row>
+            <Row>
+              <Col xs={2}>
+                <img
+                    src={currentSong.image[0].url}
+                    className="album-img"
+                    alt="artist album"
+                />
+              </Col>
+              <Col xs={7} className="ml-2">
+                <div className="music-title">{currentSong.music}</div>
+                <div className="artist-name">{currentSong.artist}</div>
+              </Col>
+              <Col xs={2}>
+                    <HeartFill
+                        size={20}
+                        color="crimson"
+                        className="like-icon"
                     />
-                  </Col>
-                  <Col xs={5} className="username-container">
-                    <h5>Jazzier</h5>
-                  </Col>
-              </Row>
-              <Row>
-                  <Col xs={2}>
-                    <img
-                        src="https://developer.spotify.com/assets/branding-guidelines/albumArt1@2x.png"
-                        className="album-img"
-                        alt="artist album"
-                    />
-                  </Col>
-                  <Col xs={7} className="ml-2">
-                    <div className="music-title">Another Day Of Sun</div>
-                    <div className="artist-name">La La Land</div>
-                  </Col>
-                  <Col xs={2}>
-                        <HeartFill
-                            size={20}
-                            color="crimson"
-                            className="like-icon"
-                        />
-                  </Col>
-              </Row>
-          </Popup>
-      </MarkerIcon>
-    );
-  }
+              </Col>
+            </Row>
+        </Popup>
+    </MarkerIcon>
+  );
+}
 
 export default Marker;
