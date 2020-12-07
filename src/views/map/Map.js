@@ -49,18 +49,25 @@ function MapView({
 									<Col><Spinner animation="grow" variant="primary"/></Col>
 								</Row>
 							) : (
-								<>
-									<TileLayer
-										url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-										attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-									/>
-									{nearPeopleData.map((user) =>
-										<Marker
-											key={user.spotifyID}
-											user={user}
+								nearPeopleLoadingError ?
+								(
+									<Row className="d-flex align-items-center h-100">
+										<Col><p className="h5">{nearPeopleLoadingError}, please try again.</p></Col>
+									</Row>
+								) : (
+									<>
+										<TileLayer
+											url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+											attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 										/>
-									)}
-								</>
+										{nearPeopleData.map((user) =>
+											<Marker
+												key={user.spotifyID}
+												user={user}
+											/>
+										)}
+									</>
+								)
 							)}
 						</Map>
 					)}
