@@ -24,7 +24,6 @@ function MapView({
 	}, []);
 
 	useEffect(() => {
-		console.log(point);
 		if (point) fetchNearPeople(point);
   }, [point, fetchNearPeople]);
 

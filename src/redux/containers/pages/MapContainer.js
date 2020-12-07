@@ -17,7 +17,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchSong: () => dispatch(fetchSong()),
-  fetchNearPeople: () => dispatch(fetchNearPeople()),
+  fetchNearPeople: (point) => dispatch(fetchNearPeople(point)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);
