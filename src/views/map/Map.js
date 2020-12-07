@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
 import { MapContainer as Map, TileLayer } from "react-leaflet";
-import { Container, Row, Col} from "react-bootstrap";
+import { Container, Row, Col, Spinner} from "react-bootstrap";
 
 import Header from "../components/Header/Header";
 import Marker from "../components/Marker/Marker";
@@ -36,21 +36,33 @@ function MapView({
 		<>
 		<Header />
 		<Container fluid className="map-page">
-			<Row className="map-row">
+			<Row className="map-row text-center">
 				<Col xs={12} md={11} lg={11} xl={4}>
 					{point && (
-
-					<Map
-						className="map-container"
-						center={[point.lat, point.long]}
-						zoom={100} scrollWheelZoom={false}
-					>
-						<TileLayer
-							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-							attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-						/>
-						<Marker lat={point.lat} long={point.long} />
-					</Map>
+						<Map
+							className="map-container"
+							center={[point.lat, point.long]}
+							zoom={100} scrollWheelZoom={false}
+						>
+							{ nearPeopleLoading ? (
+								<Row className="d-flex align-items-center h-100">
+									<Col><Spinner animation="grow" variant="primary"/></Col>
+								</Row>
+							) : (
+								<>
+									<TileLayer
+										url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+										attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+									/>
+									{nearPeopleData.map((user) =>
+										<Marker
+											key={user.spotifyID}
+											user={user}
+										/>
+									)}
+								</>
+							)}
+						</Map>
 					)}
 				</Col>
 			</Row>
