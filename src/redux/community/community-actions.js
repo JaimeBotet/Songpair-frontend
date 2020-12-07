@@ -30,7 +30,6 @@ export function fetchNearPeople(point) {
         point: point,
       }),
     }).catch((error) => {
-      console.log(error);
       dispatch(fetchNearPeopleError(error.message));
     });
 
