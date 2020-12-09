@@ -68,6 +68,22 @@ export const signoutSuccess = () => ({
   type: UserTypes.SIGNOUT_SUCCESS,
 });
 
+export const updatePositionRequest = () => ({
+  type: UserTypes.UPDATE_POSITION_REQUEST
+});
+
+export const updatePositionSuccess = (point) => ({
+  type: UserTypes.UPDATE_POSITION_SUCCESS,
+  payload: {
+    point: point
+  }
+});
+
+export const updatePositionError = (message) => ({
+  type: UserTypes.UPDATE_POSITION_ERROR,
+  payload: message
+});
+
 export function signUp({ name, email, password, avatar, token, refreshToken, location, spotifyID }) {
   return async function signUpThunk(dispatch) {
     dispatch(signUpRequest());
@@ -186,6 +202,34 @@ export function signInForm(code) {
       );
     } else {
       dispatch(signInFormError(resJson.error));
+    }
+  };
+}
+
+export function updatePosition(point) {
+  return async function updatePositionThunk(dispatch, getState) {
+
+    const token = getState().user.currentUser.token;
+
+    if (token) {
+      dispatch(updatePositionRequest());
+
+      const res = await fetch("http://localhost:8080/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          point: point
+        }),
+      }).catch((error) => dispatch(signoutError(error.message)));
+
+      if (res.ok) {
+        dispatch(updatePositionSucess(point));
+      }
+    } else {
+      dispatch(updatePositionError("Missing auth token"));
     }
   };
 }

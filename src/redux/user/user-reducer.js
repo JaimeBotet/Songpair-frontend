@@ -6,6 +6,8 @@ export const UserInitialState = {
   isAuthenticated: false,
   isSigningUp: false,
   signUpError: null,
+  isUpdatingPosition: false,
+  updatingPositionError: null,
   isSigningOut: false,
   signOutError: null,
   signInForm: null,
@@ -15,6 +17,10 @@ export const UserInitialState = {
     name: null,
     token: null,
     avatar: null,
+    position: {
+      lat: null,
+      long: null,
+    },
   },
 };
 
@@ -123,6 +129,33 @@ const UserReducer = (state = UserInitialState, action) => {
           email: null,
           token: null,
         },
+      };
+    }
+    case UserTypes.UPDATE_POSITION_REQUEST: {
+      return {
+        ...state,
+        isUpdatingPosition: true,
+        updatingPositionError: null,
+      };
+    }
+    case UserTypes.UPDATE_POSITION_SUCCESS: {
+      return {
+        ...state,
+        isUpdatingPosition: false,
+        updatingPositionError: null,
+        currentUser: {
+          position: {
+            lat: action.payload.lat,
+            long: action.payload.long,
+          },
+        }
+      }
+    }
+    case UserTypes.UPDATE_POSITION_ERROR: {
+      return {
+        ...state,
+        isUpdatingPosition: false,
+        updatingPositionError: action.payload,
       };
     }
     default: {

@@ -25,12 +25,12 @@ function MapView({
 
 	useEffect(() => {
 		if (point) fetchNearPeople(point);
-  }, [point, fetchNearPeople]);
+  	}, [point, fetchNearPeople]);
 
-  // Redirect if not logged
-  if (!isAuthenticated) {
-    return <Redirect to={ROUTES.LOGIN} />;
-  }
+	// Redirect if not logged
+	if (!isAuthenticated) {
+		return <Redirect to={ROUTES.LOGIN} />;
+	}
 
 	return (
 		<>
