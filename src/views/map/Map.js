@@ -66,7 +66,8 @@ function MapView({
 											url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 											attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 										/>
-										{nearPeopleData.map((user) =>
+										{nearPeopleData &&
+											nearPeopleData.map((user) =>
 											<Marker
 												key={user.spotifyID}
 												user={user}
