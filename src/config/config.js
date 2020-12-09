@@ -10,3 +10,4 @@ export const signInFormURI = apiDomain + "signup/spotify";
 export const signUpURI = apiDomain + "signup";
 export const loginURI = apiDomain + "login";
 export const nearPeopleURI = apiDomain + "map/near-people";
+export const updatePosURI = apiDomain + "map/update-position";
