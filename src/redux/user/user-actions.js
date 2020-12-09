@@ -226,7 +226,7 @@ export function updatePosition(point) {
       }).catch((error) => dispatch(signoutError(error.message)));
 
       if (res.ok) {
-        dispatch(updatePositionSucess(point));
+        dispatch(updatePositionSuccess(point));
       }
     } else {
       dispatch(updatePositionError("Missing auth token"));
