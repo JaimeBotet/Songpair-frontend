@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 
 import { MapContainer as Map, TileLayer } from "react-leaflet";
 import { Container, Row, Col, Spinner} from "react-bootstrap";
+import from ¨..¨
 
 import Header from "../components/Header/Header";
 import Marker from "../components/Marker/Marker";
@@ -22,6 +23,8 @@ function MapView({
 	useEffect(() => {
 		navigator.geolocation.getCurrentPosition((pos) => setPoint({lat: pos.coords.latitude, long: pos.coords.longitude}) );
 	}, []);
+
+
 
 	useEffect(() => {
 		if (point) fetchNearPeople(point);
