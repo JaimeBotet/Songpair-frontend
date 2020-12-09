@@ -5,7 +5,8 @@ export const positionWatcher = (point, updatePosition) => {
     function success(pos) {
       var crd = pos.coords;
 
-      if(measure(crd.latitude, crd.longitude, point.lat, point.long) >= 10){
+      
+      if(measure(crd.latitude, crd.longitude, point.lat, point.long) >= 10){ //established to 10 meters
         updatePosition({lat: crd.latitude, long: crd.longitude});
         navigator.geolocation.clearWatch(id);
       }
