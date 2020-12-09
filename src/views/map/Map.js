@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 
 import { MapContainer as Map, TileLayer } from "react-leaflet";
 import { Container, Row, Col, Spinner} from "react-bootstrap";
-import from ¨..¨
+import { positionWatcher } from "../../utils/watchPosition";
 
 import Header from "../components/Header/Header";
 import Marker from "../components/Marker/Marker";
@@ -24,11 +24,16 @@ function MapView({
 		navigator.geolocation.getCurrentPosition((pos) => setPoint({lat: pos.coords.latitude, long: pos.coords.longitude}) );
 	}, []);
 
-
-
 	useEffect(() => {
-		if (point) fetchNearPeople(point);
-  	}, [point, fetchNearPeople]);
+		if (point) {
+			fetchNearPeople(point);
+			var watcher = positionWatcher(point, setPoint);
+		}
+
+		return function () {
+			navigator.geolocation.clearWatch(watcher)
+		}
+	}, [point, fetchNearPeople]);
 
 	// Redirect if not logged
 	if (!isAuthenticated) {
