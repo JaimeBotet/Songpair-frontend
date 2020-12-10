@@ -16,5 +16,5 @@ export default function useUpdateLocation(updateUserLocation){
 		return function () {
 			navigator.geolocation.clearWatch(watcherId)
 		}
-	}, [coords]);
+	}, [coords, updateUserLocation]);
 }
