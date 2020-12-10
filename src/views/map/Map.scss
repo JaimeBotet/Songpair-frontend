@@ -1,3 +1,5 @@
+@import "../../styles/variables.scss";
+
 .map-page {
     position: relative;
     overflow: hidden;
@@ -29,6 +31,14 @@
     font-family: Impact;
     font-size: 16px;
     font-weight: 400;
+    & a {
+      color: $primary;
+      transition: all 280ms ease-in-out;
+      &:hover {
+        color: greenyellow;
+        text-decoration: none;
+      }
+    }
   }
   .album-img {
       width: 40px;
@@ -47,5 +57,8 @@
   }
   .like-icon {
       margin-top: 10px;
+  }
+  .user-row {
+    cursor: pointer;
   }
 }
