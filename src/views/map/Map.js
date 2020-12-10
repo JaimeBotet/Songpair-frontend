@@ -20,12 +20,17 @@ function MapView({
 	fetchNearPeople,
 }) {
 	const [point, setPoint] = useState(null);
+	const [moved, setMoved] = useState(false);
 
-	function ChangeView({center}) {
+	function ChangeView({center, active}) {
 		const map = useMap();
-		if (point) {
+		if (point && active) {
 			map.setView([center.lat, center.long]);
 		}
+		useEffect(() => {
+			if (active) setMoved(false);
+		}, [active]);
+
 		return null;
 	}
 
@@ -36,6 +41,7 @@ function MapView({
 		} else {
 			navigator.geolocation.getCurrentPosition((pos) => setPoint({lat: pos.coords.latitude, long: pos.coords.longitude}));
 		}
+		setMoved(true);
 
 		return function () {
 				navigator.geolocation.clearWatch(watcher)
@@ -59,7 +65,7 @@ function MapView({
 							center={[point.lat, point.long]}
 							zoom={100} scrollWheelZoom={false}
 						>
-							<ChangeView center={point} />
+							<ChangeView center={point} active={moved}/>
 							{ nearPeopleLoading ? (
 								<Row className="d-flex align-items-center h-100">
 									<Col><Spinner animation="grow" variant="primary"/></Col>
