@@ -68,19 +68,19 @@ export const signoutSuccess = () => ({
   type: UserTypes.SIGNOUT_SUCCESS,
 });
 
-export const updatePositionRequest = () => ({
-  type: UserTypes.UPDATE_POSITION_REQUEST
+export const updateLocationRequest = () => ({
+  type: UserTypes.UPDATE_LOCATION_REQUEST
 });
 
-export const updatePositionSuccess = (point) => ({
-  type: UserTypes.UPDATE_POSITION_SUCCESS,
+export const updateLocationSuccess = (point) => ({
+  type: UserTypes.UPDATE_LOCATION_SUCCESS,
   payload: {
     point: point
   }
 });
 
-export const updatePositionError = (message) => ({
-  type: UserTypes.UPDATE_POSITION_ERROR,
+export const updateLocationError = (message) => ({
+  type: UserTypes.UPDATE_LOCATION_ERROR,
   payload: message
 });
 
@@ -206,13 +206,13 @@ export function signInForm(code) {
   };
 }
 
-export function updatePosition(point) {
-  return async function updatePositionThunk(dispatch, getState) {
+export function updateUserLocation(point) {
+  return async function updateLocationThunk(dispatch, getState) {
 
     const token = getState().user.currentUser.token;
 
     if (token) {
-      dispatch(updatePositionRequest());
+      dispatch(updateLocationRequest());
 
       const res = await fetch(updatePosURI, {
         method: "POST",
@@ -223,13 +223,13 @@ export function updatePosition(point) {
         body: JSON.stringify({
           point: point
         }),
-      }).catch((error) => dispatch(signoutError(error.message)));
+      }).catch((error) => dispatch(updateLocationError(error.message)));
 
       if (res.ok) {
-        dispatch(updatePositionSuccess(point));
+        dispatch(updateLocationSuccess(point));
       }
     } else {
-      dispatch(updatePositionError("Missing auth token"));
+      dispatch(updateLocationError("Missing auth token"));
     }
   };
 }

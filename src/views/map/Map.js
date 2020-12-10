@@ -3,7 +3,6 @@ import { Redirect } from "react-router-dom";
 
 import { MapContainer as Map, TileLayer, useMap } from "react-leaflet";
 import { Container, Row, Col, Spinner} from "react-bootstrap";
-import { positionWatcher } from "../../utils/watchPosition";
 
 import Header from "../components/Header/Header";
 import Marker from "../components/Marker/Marker";
@@ -13,10 +12,12 @@ import ROUTES from "../../utils/routes";
 import "./Map.scss";
 import "leaflet/dist/leaflet.css";
 
+
 function MapView({
 	currentUserState: { isAuthenticated } = {},
 	communityState: { nearPeopleLoading, nearPeopleLoadingError, nearPeopleData } = {},
-	fetchNearPeople
+	fetchNearPeople,
+	updateUserLocation
 }) {
 	const [point, setPoint] = useState(null);
 
@@ -35,12 +36,9 @@ function MapView({
 	useEffect(() => {
 		if (point) {
 			fetchNearPeople(point);
-			var watcher = positionWatcher(point, setPoint);
+			updateUserLocation(point);
 		}
-
-		return function () {
-			navigator.geolocation.clearWatch(watcher)
-		}
+		
 	}, [point, fetchNearPeople]);
 
 	// Redirect if not logged

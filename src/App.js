@@ -6,11 +6,15 @@ import LoginContainer from "./redux/containers/pages/LoginContainer";
 import RegisterContainer from "./redux/containers/pages/RegisterContainer";
 import MapContainer from "./redux/containers/pages/MapContainer";
 import DashboardContainer from "./redux/containers/pages/DashboardContainer";
+import useUpdateLocation from './hooks/useUpdateLocation';
 // import ChatContainer from "./redux/containers/pages/ChatContainer";
 
 import ROUTES from "./utils/routes";
 
 function App() {
+
+  useUpdateLocation();
+
   return (
       <Switch>
         <Route path={ROUTES.HOME} exact>
