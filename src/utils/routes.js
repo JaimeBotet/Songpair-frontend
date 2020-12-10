@@ -4,6 +4,7 @@ const ROUTES = {
     REGISTER: "/signup",
     DASHBOARD: "/dashboard",
     MAP: "/map",
+    PROFILE: "/profile/",
     CHAT: "/chat"
   };
 
