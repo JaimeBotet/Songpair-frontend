@@ -6,7 +6,7 @@ import { MapContainer as Map, TileLayer, useMap } from "react-leaflet";
 import { Container, Row, Col, Spinner} from "react-bootstrap";
 
 import Header from "../components/Header/Header";
-import Marker from "../components/Marker/Marker";
+import Marker from "../../redux/containers/components/MarkerContainer";
 
 import ROUTES from "../../utils/routes";
 
