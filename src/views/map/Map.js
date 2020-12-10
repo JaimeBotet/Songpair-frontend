@@ -17,7 +17,6 @@ function MapView({
 	currentUserState: { isAuthenticated } = {},
 	communityState: { nearPeopleLoading, nearPeopleLoadingError, nearPeopleData } = {},
 	fetchNearPeople,
-	updateUserLocation
 }) {
 	const [point, setPoint] = useState(null);
 
@@ -36,9 +35,7 @@ function MapView({
 	useEffect(() => {
 		if (point) {
 			fetchNearPeople(point);
-			updateUserLocation(point);
 		}
-		
 	}, [point, fetchNearPeople]);
 
 	// Redirect if not logged
