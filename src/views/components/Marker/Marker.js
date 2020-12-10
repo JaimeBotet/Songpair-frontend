@@ -1,6 +1,9 @@
+import { useState } from "react";
+
 import {Row, Col} from 'react-bootstrap';
 import { Marker as MarkerIcon, Popup } from 'react-leaflet';
-import { HeartFill } from 'react-bootstrap-icons'
+import { HeartFill, Heart } from 'react-bootstrap-icons'
+
 import L from 'leaflet';
 import icon from '../../../assets/map/marker.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -16,10 +19,17 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-function Marker({user}) {
+function Marker({user, updateLike}) {
   const long = user.location.coordinates[0]
   const lat = user.location.coordinates[1]
-  const { name, avatar, currentSong } = user;
+  const { name, avatar, currentSong, like } = user;
+
+  const [songLike, setSongLike] = useState(like);
+
+  function handleLike() {
+    updateLike(currentSong, user.spotifyID);
+    setSongLike(!songLike);
+  }
 
   return (
     <MarkerIcon position={[lat, long]} >
@@ -49,11 +59,23 @@ function Marker({user}) {
                 <div className="artist-name">{currentSong.artist}</div>
               </Col>
               <Col xs={2}>
-                    <HeartFill
-                        size={20}
-                        color="crimson"
-                        className="like-icon"
-                    />
+                {songLike ? (
+                  <HeartFill
+                    size={20}
+                    color="crimson"
+                    className="like-icon"
+                    role="button"
+                    onClick={handleLike}
+                  />
+                ):(
+                  <Heart
+                    size={20}
+                    color="crimson"
+                    className="like-icon"
+                    role="button"
+                    onClick={handleLike}
+                  />
+                )}
               </Col>
             </Row>
         </Popup>
