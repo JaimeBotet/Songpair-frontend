@@ -1,12 +1,14 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import {Row, Col} from 'react-bootstrap';
 import { Marker as MarkerIcon, Popup } from 'react-leaflet';
-import { HeartFill, Heart } from 'react-bootstrap-icons'
+import { HeartFill, Heart } from 'react-bootstrap-icons';
 
 import L from 'leaflet';
 import icon from '../../../assets/map/marker.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import ROUTES from "../../../utils/routes";
 
 let DefaultIcon = L.icon({
     iconUrl:      icon,
@@ -22,7 +24,7 @@ L.Marker.prototype.options.icon = DefaultIcon;
 function Marker({user, updateLike}) {
   const long = user.location.coordinates[0]
   const lat = user.location.coordinates[1]
-  const { name, avatar, currentSong, like } = user;
+  const { name, avatar, currentSong, like, spotifyID } = user;
 
   const [songLike, setSongLike] = useState(like);
 
@@ -34,7 +36,7 @@ function Marker({user, updateLike}) {
   return (
     <MarkerIcon position={[lat, long]} >
         <Popup>
-            <Row className="mb-2">
+            <Row className="mb-2 user-row">
                 <Col xs={1}>
                   <img
                       src={avatar}
@@ -43,7 +45,7 @@ function Marker({user, updateLike}) {
                   />
                 </Col>
                 <Col xs={10} className="username-container">
-                  <span>{name}</span>
+                  <Link to={ROUTES.PROFILE + spotifyID}>{name}</Link>
                 </Col>
             </Row>
             <Row>
