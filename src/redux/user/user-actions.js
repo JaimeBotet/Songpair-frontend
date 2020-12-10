@@ -1,5 +1,5 @@
 import UserTypes from "./user-types";
-import { signInFormURI, signUpURI, loginURI, updatePosURI } from "../../config/config";
+import { signInFormURI, signUpURI, loginURI, updatePosURI, updateLikeURI } from "../../config/config";
 
 export const resetStoreAndLogOut = () => ({
   type: UserTypes.RESET_STORE_AND_LOG_OUT,
@@ -81,6 +81,20 @@ export const updateLocationSuccess = (point) => ({
 
 export const updateLocationError = (message) => ({
   type: UserTypes.UPDATE_LOCATION_ERROR,
+  payload: message
+});
+
+export const updateLikeRequest = () => ({
+  type: UserTypes.UPDATE_LIKE_REQUEST
+});
+
+export const updateLikeSuccess = (like) => ({
+  type: UserTypes.UPDATE_LIKE_SUCCESS,
+  payload: like
+});
+
+export const updateLikeError = (message) => ({
+  type: UserTypes.UPDATE_LIKE_ERROR,
   payload: message
 });
 
@@ -230,6 +244,42 @@ export function updateUserLocation(point) {
       }
     } else {
       dispatch(updateLocationError("Missing auth token"));
+    }
+  };
+}
+
+export function updateLike(song, receiver) {
+  return async function updateLikeThunk(dispatch, getState) {
+
+    const token = getState().user.currentUser.token;
+
+    if (token) {
+      dispatch(updateLikeRequest());
+
+      const res = await fetch(updateLikeURI, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          song: song,
+          receiver: receiver
+        }),
+      }).catch((error) => dispatch(updateLikeError(error.message)));
+
+      const resJson = await res
+      .json()
+      .catch((error) => dispatch(updateLikeError(error.message)));
+
+      if (res.ok) {
+        dispatch(updateLikeSuccess(resJson.data.data));
+      } else {
+        dispatch(updateLikeError(resJson.error));
+      }
+
+    } else {
+      dispatch(updateLikeError("Missing auth token"));
     }
   };
 }
