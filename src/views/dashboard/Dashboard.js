@@ -1,4 +1,6 @@
 import { Redirect, Link } from "react-router-dom";
+import useUpdateLocation from "../../hooks/useUpdateLocation"
+
 import { ChatLeftDotsFill, GeoFill, Power } from "react-bootstrap-icons"
 import { Container, Row, Col } from 'react-bootstrap';
 
@@ -7,8 +9,10 @@ import ROUTES from "../../utils/routes";
 
 function Dashboard({
   currentUserState: { currentUser, isAuthenticated } = {},
-  logout
+  logout, updateUserLocation
 }) {
+
+  useUpdateLocation(updateUserLocation);
 
   // Redirect if not logged
   if (!isAuthenticated) {
