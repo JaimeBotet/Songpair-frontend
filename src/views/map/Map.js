@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
-import { MapContainer as Map, TileLayer } from "react-leaflet";
+import { MapContainer as Map, TileLayer, useMap } from "react-leaflet";
 import { Container, Row, Col, Spinner} from "react-bootstrap";
 import { positionWatcher } from "../../utils/watchPosition";
 
@@ -19,6 +19,14 @@ function MapView({
 	fetchNearPeople
 }) {
 	const [point, setPoint] = useState(null);
+
+	function ChangeView({center}) {
+		const map = useMap();
+		if (point) {
+			map.setView([center.lat, center.long]);
+		}
+		return null;
+	}
 
 	useEffect(() => {
 		navigator.geolocation.getCurrentPosition((pos) => setPoint({lat: pos.coords.latitude, long: pos.coords.longitude}) );
@@ -52,6 +60,7 @@ function MapView({
 							center={[point.lat, point.long]}
 							zoom={100} scrollWheelZoom={false}
 						>
+							<ChangeView center={point} />
 							{ nearPeopleLoading ? (
 								<Row className="d-flex align-items-center h-100">
 									<Col><Spinner animation="grow" variant="primary"/></Col>
