@@ -158,6 +158,28 @@ const UserReducer = (state = UserInitialState, action) => {
         updatingPositionError: action.payload,
       };
     }
+    case UserTypes.UPDATE_LIKE_REQUEST: {
+      return {
+        ...state,
+        loadingLike: true,
+        likeError: null,
+      };
+    }
+    case UserTypes.UPDATE_LIKE_SUCCESS: {
+      return {
+        ...state,
+        loadingLike: false,
+        likeError: null,
+        like: action.payload,
+      }
+    }
+    case UserTypes.UPDATE_LIKE_ERROR: {
+      return {
+        ...state,
+        loadingLike: false,
+        likeError: action.payload,
+      };
+    }
     default: {
       return state;
     }
