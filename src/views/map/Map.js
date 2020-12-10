@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
+import { positionWatcher } from "../../utils/watchPosition";
 
 import { MapContainer as Map, TileLayer, useMap } from "react-leaflet";
 import { Container, Row, Col, Spinner} from "react-bootstrap";
@@ -29,12 +30,15 @@ function MapView({
 	}
 
 	useEffect(() => {
-		navigator.geolocation.getCurrentPosition((pos) => setPoint({lat: pos.coords.latitude, long: pos.coords.longitude}) );
-	}, []);
-
-	useEffect(() => {
 		if (point) {
 			fetchNearPeople(point);
+			var watcher = positionWatcher(point, setPoint);
+		} else {
+			navigator.geolocation.getCurrentPosition((pos) => setPoint({lat: pos.coords.latitude, long: pos.coords.longitude}));
+		}
+
+		return function () {
+				navigator.geolocation.clearWatch(watcher)
 		}
 	}, [point, fetchNearPeople]);
 
