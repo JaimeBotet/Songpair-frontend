@@ -62,7 +62,7 @@ function Profile({
                         </Col>
                       </>
                       ) : (
-                        <Col xs={12}>No song</Col>
+                        <Col xs={12} className="text-center">No song</Col>
                       )}
                     </Row>
                 </Col>
