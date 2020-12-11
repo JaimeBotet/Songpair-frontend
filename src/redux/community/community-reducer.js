@@ -3,7 +3,10 @@ import CommunityTypes from "./community-types";
 const CommunityInitialState = {
   nearPeopleLoading: false,
   nearPeopleLoadingError: null,
-  nearPeopleData: null
+  nearPeopleData: null,
+  loadingProfile: false,
+  profileError: null,
+  profile: null,
 };
 
 const CommunityReducer = (state = CommunityInitialState, action) => {
@@ -28,6 +31,28 @@ const CommunityReducer = (state = CommunityInitialState, action) => {
         nearPeopleLoading: false,
         nearPeopleLoadingError: null,
         nearPeopleData: action.payload
+      };
+    }
+    case CommunityTypes.GET_PROFILE_REQUEST: {
+      return {
+        ...state,
+        loadingProfile: true,
+        profileError: null,
+      };
+    }
+    case CommunityTypes.GET_PROFILE_SUCCESS: {
+      return {
+        ...state,
+        loadingProfile: false,
+        profileError: null,
+        profile: action.payload,
+      }
+    }
+    case CommunityTypes.GET_PROFILE_ERROR: {
+      return {
+        ...state,
+        loadingProfile: false,
+        profileError: action.payload,
       };
     }
     default: {
