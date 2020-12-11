@@ -57,7 +57,7 @@ function Profile({
                           <div>{currentSong.artist}</div>
                         </Col>
                         <Col xs={3} xl={2} className="music-actions">
-                          <div><HeartFill /><span>101</span></div>
+                          <div><HeartFill color="crimson" /><span>101</span></div>
                           <div><MusicNoteList /><span>Add</span></div>
                         </Col>
                       </>
@@ -70,7 +70,7 @@ function Profile({
                   <Row className="status">
                     <Col xs={3} className="total-likes">
                     <Col xs={12}><h5>Total Likes</h5></Col>
-                    <Col xs={12}><HeartFill /></Col>
+                    <Col xs={12}><HeartFill color="crimson"/></Col>
                     <Col xs={12}>101</Col>
                     </Col>
                     <Col xs={8} className="most-liked">
@@ -82,7 +82,7 @@ function Profile({
                         <Col xs={6} className="music">
                           <div className="music-title">Dance Monkey</div>
                           <div>Tones And I</div>
-                          <div><HeartFill /><span>101</span></div>
+                          <div><HeartFill color="crimson" /><span>101</span></div>
                         </Col>
                       </Row>
                     </Col>
