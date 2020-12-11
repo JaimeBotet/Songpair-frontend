@@ -55,7 +55,7 @@ function MapView({
 
 	return (
 		<>
-		<Header />
+		<Header title="Near People" back={ROUTES.DASHBOARD} />
 		<Container fluid className="map-page">
 			<Row className="map-row text-center">
 				<Col xs={12} md={11} lg={11} xl={4}>
