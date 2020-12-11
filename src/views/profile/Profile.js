@@ -45,7 +45,7 @@ function Profile({
               xl={{ span: 4, offset: 4}}
             >
               {!loadingProfile ? (
-                <Row className="profile-page">
+                <Row className="profile-page fade-in">
                   <Col xs={12} className="avatar">
                     <img src={avatar} alt="user avatar" />
                     <h4>{name}</h4>
@@ -66,12 +66,14 @@ function Profile({
                             <div>
                               { currentSong.like ? (
                                 <HeartFill
+                                  className="bounce-effect"
                                   role="button"
                                   color="crimson"
                                   onClick={handleLike}
                                 />
                                 ) : (
                                 <Heart
+                                  className="bounce-effect"
                                   role="button"
                                   color="crimson"
                                   onClick={handleLike}
