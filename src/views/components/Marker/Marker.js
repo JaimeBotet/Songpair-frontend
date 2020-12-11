@@ -65,7 +65,7 @@ function Marker({user, updateLike}) {
                   <HeartFill
                     size={20}
                     color="crimson"
-                    className="like-icon"
+                    className="like-icon bounce-effect"
                     role="button"
                     onClick={handleLike}
                   />
@@ -73,7 +73,7 @@ function Marker({user, updateLike}) {
                   <Heart
                     size={20}
                     color="crimson"
-                    className="like-icon"
+                    className="like-icon bounce-effect"
                     role="button"
                     onClick={handleLike}
                   />
