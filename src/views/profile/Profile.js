@@ -69,17 +69,19 @@ function Profile({
                 <Col xs={11}>
                   <Row className="status">
                     <Col xs={3} className="total-likes">
-                      <h5>Total Likes</h5>
+                    <Col xs={12}><h5>Total Likes</h5></Col>
+                    <Col xs={12}><HeartFill /></Col>
+                    <Col xs={12}>101</Col>
                     </Col>
                     <Col xs={8} className="most-liked">
                       <Row>
                         <Col xs={12}><h5>Most Liked Song</h5></Col>
                         <Col xs={6}>
-                          <img src={currentSong.image[0].url} alt="album" />
+                          <img src="https://i.scdn.co/image/ab67616d0000b273c6f7af36ecdc3ed6e0a1f169" alt="album" />
                         </Col>
                         <Col xs={6} className="music">
-                          <div className="music-title">{currentSong.music}</div>
-                          <div>{currentSong.artist}</div>
+                          <div className="music-title">Dance Monkey</div>
+                          <div>Tones And I</div>
                           <div><HeartFill /><span>101</span></div>
                         </Col>
                       </Row>
