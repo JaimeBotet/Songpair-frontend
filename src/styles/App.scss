@@ -7,5 +7,13 @@ h1, h2, h3, h4, h5, h6, .btn {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
+.songpair-load {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    height: 90vh;
+    color: white;
+  }
+
 /* import bootstrap to set changes */
 @import "~bootstrap/scss/bootstrap";
