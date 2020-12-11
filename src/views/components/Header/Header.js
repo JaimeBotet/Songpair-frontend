@@ -2,10 +2,9 @@ import { Link } from "react-router-dom";
 import { Container, Row, Col} from 'react-bootstrap';
 import { ChevronLeft } from 'react-bootstrap-icons';
 
-import ROUTES from "../../../utils/routes"
 import './Header.scss';
 
-function Header() {
+function Header({title, back}) {
     return (
       <Container fluid>
         <Row>
@@ -16,12 +15,12 @@ function Header() {
           >
             <Row>
               <Col xs={1}>
-                <Link to={ROUTES.DASHBOARD}>
+                <Link to={back}>
                   <ChevronLeft size={26} color="white" role="button" />
                 </Link>
               </Col>
               <Col xs={10}>
-                <h2 className="text-white">Near people</h2>
+    <h2 className="text-white">{title}</h2>
               </Col>
             </Row>
           </Col>
