@@ -1,5 +1,5 @@
 import CommunityTypes from "./community-types";
-import { nearPeopleURI } from "../../config/config";
+import { nearPeopleURI, getProfileURI } from "../../config/config";
 
 export const fetchNearPeopleRequest = () => ({
   type: CommunityTypes.FETCH_NEAR_PEOPLE,
@@ -13,6 +13,20 @@ export const fetchNearPeopleError = (errorMessage) => ({
 export const fetchNearPeopleSuccess = (nearPeople) => ({
   type: CommunityTypes.FETCH_NEAR_PEOPLE_SUCCESS,
   payload: nearPeople,
+});
+
+export const getProfileRequest = () => ({
+  type: CommunityTypes.GET_PROFILE_REQUEST
+});
+
+export const getProfileSuccess = (profile) => ({
+  type: CommunityTypes.GET_PROFILE_SUCCESS,
+  payload: profile
+});
+
+export const getProfileError = (message) => ({
+  type: CommunityTypes.GET_PROFILE_ERROR,
+  payload: message
 });
 
 export function fetchNearPeople(point) {
@@ -39,6 +53,38 @@ export function fetchNearPeople(point) {
       dispatch(fetchNearPeopleSuccess(nearPeopleJson.data));
     } else {
       dispatch(fetchNearPeopleError(nearPeopleJson.error));
+    }
+  };
+}
+
+export function getProfile(id) {
+  return async function getProfileThunk(dispatch, getState) {
+
+    const token = getState().user.currentUser.token;
+
+    if (token) {
+      dispatch(getProfileRequest());
+
+      const res = await fetch(`${getProfileURI}/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }
+      }).catch((error) => dispatch(getProfileError(error.message)));
+
+      const resJson = await res
+      .json()
+      .catch((error) => dispatch(getProfileError(error.message)));
+
+      if (res.ok) {
+        dispatch(getProfileSuccess(resJson.data));
+      } else {
+        dispatch(getProfileError(resJson.error));
+      }
+
+    } else {
+      dispatch(getProfileError("Missing auth token"));
     }
   };
 }
