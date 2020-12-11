@@ -23,7 +23,7 @@ function App() {
         <Route path={ROUTES.DASHBOARD}>
           <DashboardContainer />
         </Route>
-        <Route path={ROUTES.PROFILE}>
+        <Route path={ROUTES.PROFILE + ":id"}>
           <ProfileContainer />
         </Route>
         <Route path={ROUTES.MAP}>
