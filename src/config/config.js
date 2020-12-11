@@ -12,3 +12,4 @@ export const loginURI = apiDomain + "login";
 export const nearPeopleURI = apiDomain + "map/near-people";
 export const updatePosURI = apiDomain + "map/update-position";
 export const updateLikeURI = apiDomain + "like/update";
+export const getProfileURI = apiDomain + "profile";
