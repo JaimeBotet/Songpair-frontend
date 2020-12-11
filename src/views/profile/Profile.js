@@ -69,9 +69,11 @@ function Profile({
                 <Col xs={11}>
                   <Row className="status">
                     <Col xs={3} className="total-likes">
-                    <Col xs={12}><h5>Total Likes</h5></Col>
-                    <Col xs={12}><HeartFill color="crimson"/></Col>
-                    <Col xs={12}>101</Col>
+                      <Row>
+                        <Col xs={12}><h5>Total Likes</h5></Col>
+                        <Col xs={12}><HeartFill color="crimson"/></Col>
+                        <Col xs={12}>101</Col>
+                      </Row>
                     </Col>
                     <Col xs={8} className="most-liked">
                       <Row>
