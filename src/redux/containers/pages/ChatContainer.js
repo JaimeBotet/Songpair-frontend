@@ -1,35 +1,18 @@
-// import { connect } from "react-redux";
-// import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
-// import {
-//   makeRecipeSelector,
-//   recipesStateSelector,
-// } from "../../recipes/recipes-selectors";
+import { currentUserStateSelector } from "../../user/user-selectors";
+import { updateUserLocation } from '../../user/user-actions';
+import { getChats } from '../../community/community-actions';
 
-// import { addRecipeComment, fetchRecipe } from "../../recipes/recipes-actions";
-// import { currentUserStateSelector } from "../../user/user-selectors";
-// import Recipe from "../../../views/Recipe/Recipe";
+import Chat from "../../../views/chat/Chat";
 
-// const makeMapStateToProps = () => {
-//   const recipeSelector = makeRecipeSelector();
+const chatStateToProps = (state) => ({
+  currentUserState: currentUserStateSelector(state),
+});
 
-//   return (state, ownProps) => {
-//     const recipeID = ownProps.match.params.recipeID;
+const chatDispatchToProps = (dispatch) => ({
+  getChats: () => dispatch(getChats()),
+  updateUserLocation: (point) => dispatch(updateUserLocation(point)),
+});
 
-//     return {
-//       recipe: recipeSelector(state, recipeID),
-//       recipeState: recipesStateSelector(state),
-//       currentUserState: currentUserStateSelector(state),
-//     };
-//   };
-// };
-
-// const mapDispatchToProps = (dispatch) => ({
-//   fetchRecipe: (recipeID) => dispatch(fetchRecipe(recipeID)),
-//   addRecipeComment: (recipeID, commentBody) =>
-//     dispatch(addRecipeComment(recipeID, commentBody)),
-// });
-
-// export default withRouter(
-//   connect(makeMapStateToProps, mapDispatchToProps)(Recipe),
-// );
+export default connect(chatStateToProps, chatDispatchToProps)(Chat);
