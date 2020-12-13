@@ -1,21 +1,24 @@
 import { Redirect, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import useUpdateLocation from "../../hooks/useUpdateLocation"
 
-import { ChatLeftDotsFill, GeoFill, Power } from "react-bootstrap-icons"
+import { ChatLeftDotsFill} from "react-bootstrap-icons"
 import { Container, Row, Col } from 'react-bootstrap';
+
+import Header from "../components/Header/Header";
 
 import "./Chat.scss"
 import ROUTES from "../../utils/routes";
 
 function ChatView({
   currentUserState: { currentUser, isAuthenticated } = {},
-  getUserChats, updateUserLocation
+  getChats, updateUserLocation
 }) {
 
   useUpdateLocation(updateUserLocation);
 
   useEffect(() => {
-    getUserChats();
+    getChats();
 }, []);
 
   // Redirect if not logged
@@ -23,38 +26,48 @@ function ChatView({
     return <Redirect to={ROUTES.LOGIN} />;
   }
 
-   // Logout handler
-   const logoutHandler = () => {
-    logout();
-  }
 
   return (
-    <Container fluid className="dashboard py-3">
+    <>
+    <Header title="Chat Room" back={ROUTES.DASHBOARD} />  
+    <Container fluid className="chat py-3">
         <Row className="header">
           <Col>
             <div className="logo">Songpair</div>
           </Col>
-          <Col className="text-right">
-            <Power role="button" size={25} onClick={logoutHandler}/>
-          </Col>
+          
           <Col xs={12} className="text-center">
-            <img className="avatar" src={currentUser.avatar} alt="user avatar"></img>
             <span className="username">{currentUser.name}</span>
           </Col>
         </Row>
         <Row className="menu">
-          <Col xs={12}>
-            <Link to={ROUTES.MAP}>
-              <GeoFill color="white" size={100}/>
+          <Col xs={12} className="mt-4">
+            <Link to="/chat/room/1">
+              <ChatLeftDotsFill color="white" size={100}/>
+              <span className="username">Room 1</span>
             </Link>
           </Col>
           <Col xs={12} className="mt-4">
-            <Link to={ROUTES.CHAT}>
+            <Link to="/chat/room/2">
               <ChatLeftDotsFill color="white" size={100}/>
+              <span className="username">Room 2</span>
+            </Link>
+          </Col>
+          <Col xs={12} className="mt-4">
+            <Link to="/chat/room/3">
+              <ChatLeftDotsFill color="white" size={100}/>
+              <span className="username">Room 3</span>
+            </Link>
+          </Col>
+          <Col xs={12} className="mt-4">
+            <Link to="/chat/room/4">
+              <ChatLeftDotsFill color="white" size={100}/>
+              <span className="username">Room 4</span>
             </Link>
           </Col>
         </Row>
     </Container>
+    </>
   );
 }
 

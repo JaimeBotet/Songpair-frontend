@@ -107,11 +107,12 @@ export function getChats(){
   return async function getUserChatsThunk(dispatch, getState) {
 
     const token = getState().user.currentUser.token;
+    const id = getState().user.currentUser.id;
 
     if (token) {
       dispatch(getChatsRequest());
 
-      const res = await fetch(getChatsURI + '/' + token, {
+      const res = await fetch(`${getChatsURI}/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
