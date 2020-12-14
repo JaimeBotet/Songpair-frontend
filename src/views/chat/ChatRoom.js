@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import queryString from 'query-string';
 import io from "socket.io-client";
+import { Redirect } from "react-router-dom";
 
 import TextContainer from '../components/TextContainer/TextContainer';
 import Messages from '../components/Messages/Messages';
@@ -19,7 +20,6 @@ let socket;
 
 function ChatRoom({
   currentUserState: { isAuthenticated } = {},
-  location
 }) {
   
   const [name, setName] = useState('');
@@ -30,7 +30,7 @@ function ChatRoom({
 
 
   useEffect(() => {
-    const { room } = queryString.parse(location.search);
+    const { room } = queryString.parse(window.location.search);
 
     socket = io(ENDPOINT);
 
@@ -42,7 +42,7 @@ function ChatRoom({
         alert(error);
       }
     });
-  }, [ENDPOINT, location.search]);
+  }, [ENDPOINT, window.location.search]);
   
   useEffect(() => {
     socket.on('message', message => {

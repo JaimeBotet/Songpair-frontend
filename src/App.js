@@ -8,6 +8,7 @@ import MapContainer from "./redux/containers/pages/MapContainer";
 import DashboardContainer from "./redux/containers/pages/DashboardContainer";
 import ProfileContainer from "./redux/containers/pages/ProfileContainer";
 import ChatContainer from "./redux/containers/pages/ChatContainer";
+import ChatRoomContainer from "./redux/containers/pages/ChatRoomContainer";
 
 import ROUTES from "./utils/routes";
 
@@ -34,6 +35,9 @@ function App() {
         </Route>
         <Route path={ROUTES.CHAT}>
           <ChatContainer />
+        </Route>
+        <Route path={ROUTES.ROOMS + "/:roomId"}>
+          <ChatRoomContainer />
         </Route>
       </Switch>
   );
