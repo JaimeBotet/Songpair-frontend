@@ -7,6 +7,9 @@ const CommunityInitialState = {
   loadingProfile: false,
   profileError: null,
   profile: null,
+  chatsLoading: false,
+  chatsError: null,
+  chats: null
 };
 
 const CommunityReducer = (state = CommunityInitialState, action) => {
@@ -53,6 +56,26 @@ const CommunityReducer = (state = CommunityInitialState, action) => {
         ...state,
         loadingProfile: false,
         profileError: action.payload,
+      };
+    }
+    case CommunityTypes.GET_CHATS_REQUEST: {
+      return {
+        ...state,
+        chatsLoading: true,
+      };
+    }
+    case CommunityTypes.GET_CHATS_SUCCESS: {
+      return {
+        ...state,
+        chatsLoading: false,
+        chats: action.payload
+      };
+    }
+    case CommunityTypes.GET_CHATS_ERROR: {
+      return {
+        ...state,
+        chatsLoading: false,
+        chatsError: action.payload,
       };
     }
     default: {

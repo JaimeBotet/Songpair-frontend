@@ -98,6 +98,7 @@ export const updateLikeError = (message) => ({
   payload: message
 });
 
+
 export function signUp({ name, email, password, avatar, token, refreshToken, location, spotifyID }) {
   return async function signUpThunk(dispatch) {
     dispatch(signUpRequest());
@@ -283,3 +284,5 @@ export function updateLike(song, receiver) {
     }
   };
 }
+
+

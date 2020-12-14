@@ -1,5 +1,5 @@
 import CommunityTypes from "./community-types";
-import { nearPeopleURI, getProfileURI } from "../../config/config";
+import { nearPeopleURI, getProfileURI, getChatsURI} from "../../config/config";
 
 export const fetchNearPeopleRequest = () => ({
   type: CommunityTypes.FETCH_NEAR_PEOPLE,
@@ -26,6 +26,20 @@ export const getProfileSuccess = (profile) => ({
 
 export const getProfileError = (message) => ({
   type: CommunityTypes.GET_PROFILE_ERROR,
+  payload: message
+});
+
+export const getChatsRequest = () => ({
+  type: CommunityTypes.GET_CHATS_REQUEST
+});
+
+export const getChatsSuccess = (chats) => ({
+  type: CommunityTypes.GET_CHATS_SUCCESS,
+  payload: chats
+});
+
+export const getChatsError = (message) => ({
+  type: CommunityTypes.GET_CHATS_ERROR,
   payload: message
 });
 
@@ -85,6 +99,39 @@ export function getProfile(id) {
 
     } else {
       dispatch(getProfileError("Missing auth token"));
+    }
+  };
+}
+
+export function getChats(){
+  return async function getUserChatsThunk(dispatch, getState) {
+
+    const token = getState().user.currentUser.token;
+    const id = getState().user.currentUser.id;
+
+    if (token) {
+      dispatch(getChatsRequest());
+
+      const res = await fetch(`${getChatsURI}/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }
+      }).catch((error) => dispatch(getChatsError(error.message)));
+
+      const resJson = await res
+      .json()
+      .catch((error) => dispatch(getChatsError(error.message)));
+
+      if (res.ok) {
+        dispatch(getChatsSuccess(resJson.data.data));
+      } else {
+        dispatch(getChatsError(resJson.error));
+      }
+
+    } else {
+      dispatch(getChatsError("Missing auth token"));
     }
   };
 }
