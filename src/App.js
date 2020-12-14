@@ -33,10 +33,10 @@ function App() {
         <Route path={ROUTES.REGISTER}>
           <RegisterContainer />
         </Route>
-        <Route path={ROUTES.CHAT}>
+        <Route path={ROUTES.ROOMS}>
           <ChatContainer />
         </Route>
-        <Route path={ROUTES.ROOMS + "/:roomId"}>
+        <Route path={ROUTES.CHAT + "/:roomId"}>
           <ChatRoomContainer />
         </Route>
       </Switch>

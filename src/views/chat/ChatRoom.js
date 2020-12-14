@@ -3,6 +3,7 @@ import queryString from 'query-string';
 import io from "socket.io-client";
 import { Redirect } from "react-router-dom";
 
+import Header from "../components/Header/Header";
 import TextContainer from '../components/TextContainer/TextContainer';
 import Messages from '../components/Messages/Messages';
 import InfoBar from '../components/InfoBar/InfoBar';
@@ -30,9 +31,10 @@ function ChatRoom({
 
 
   useEffect(() => {
-    const { room } = queryString.parse(window.location.search);
-
+    
     socket = io(ENDPOINT);
+    const room = window.location.pathname.substring(6);
+    const name = "test";
 
     setRoom(room);
     setName(name)
@@ -68,6 +70,8 @@ function ChatRoom({
 	}
 
   return (
+    <>
+    <Header title="Chat Room" back={ROUTES.ROOMS} />
     <div className="outerContainer">
       <div className="container">
           <InfoBar room={room} />
@@ -76,6 +80,7 @@ function ChatRoom({
       </div>
       <TextContainer users={users}/>
     </div>
+    </>
   );
 }
 

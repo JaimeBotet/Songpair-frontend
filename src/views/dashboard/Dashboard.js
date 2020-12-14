@@ -45,7 +45,7 @@ function Dashboard({
             </Link>
           </Col>
           <Col xs={12} className="mt-4">
-            <Link to={ROUTES.CHAT}>
+            <Link to={ROUTES.ROOMS}>
               <ChatLeftDotsFill color="white" size={100}/>
             </Link>
           </Col>
