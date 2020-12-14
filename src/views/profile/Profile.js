@@ -25,6 +25,11 @@ function Profile({
   function handleLike() {
     updateLike(profile.currentSong, id);
     profile.currentSong.like = !profile.currentSong.like;
+    if (profile.currentSong.like) {
+      profile.currentSong.totalLikes++;
+    } else {
+      profile.currentSong.totalLikes--;
+    }
   }
 
   // Redirect if not logged
