@@ -12,7 +12,7 @@ import "./Profile.scss";
 function Profile({
   currentUserState: { currentUser, isAuthenticated } = {},
   communityState: { profile, loadingProfile, profileError } = {},
-  updateUserLocation, getProfile, updateLike
+  updateUserLocation, getProfile, updateLike, updateProfile
 }) {
   const { id } = useParams();
 
@@ -22,14 +22,10 @@ function Profile({
 		getProfile(id);
   }, [getProfile, id]);
 
-  function handleLike() {
-    updateLike(profile.currentSong, id);
+  async function handleLike() {
     profile.currentSong.like = !profile.currentSong.like;
-    if (profile.currentSong.like) {
-      profile.currentSong.totalLikes++;
-    } else {
-      profile.currentSong.totalLikes--;
-    }
+    await updateLike(profile.currentSong, id);
+    updateProfile(id);
   }
 
   // Redirect if not logged
