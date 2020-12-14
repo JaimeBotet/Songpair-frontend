@@ -11,7 +11,7 @@ import Input from '../components/Input/Input';
 import {apiDomain} from '../../config/config';
 import ROUTES from "../../utils/routes";
 
-import './Chat.scss';
+import './ChatRoom.scss';
 
 const ENDPOINT = apiDomain;
 
