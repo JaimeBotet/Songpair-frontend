@@ -3,7 +3,7 @@ import { Redirect, useParams } from "react-router-dom";
 import useUpdateLocation from "../../hooks/useUpdateLocation"
 
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
-import { HeartFill, Heart, MusicNoteList, ExclamationTriangleFill } from 'react-bootstrap-icons';
+import { HeartFill, Heart, MusicNoteList, ExclamationTriangleFill, EmojiFrownFill } from 'react-bootstrap-icons';
 import Header from "../components/Header/Header";
 
 import ROUTES from "../../utils/routes";
@@ -100,14 +100,23 @@ function Profile({
                       <Col xs={8} className="most-liked">
                         <Row>
                           <Col xs={12}><h5>Most Liked Song</h5></Col>
-                          <Col xs={6}>
-                            <img src={profile.likes.mostLiked.image[0].url} alt="album" />
-                          </Col>
-                          <Col xs={6} className="music">
-                            <div className="music-title">{profile.likes.mostLiked.music}</div>
-                            <div>{profile.likes.mostLiked.artist}</div>
-                            <div><HeartFill color="crimson" /><span>{profile.likes.mostLiked.likesCount}</span></div>
-                          </Col>
+                          { profile.likes.mostLiked ? (
+                            <>
+                              <Col xs={6}>
+                                <img src={profile.likes.mostLiked.image[0].url} alt="album" />
+                              </Col>
+                              <Col xs={6} className="music">
+                                <div className="music-title">{profile.likes.mostLiked.music}</div>
+                                <div>{profile.likes.mostLiked.artist}</div>
+                                <div><HeartFill color="crimson" /><span>{profile.likes.mostLiked.likesCount}</span></div>
+                              </Col>
+                            </>
+                          ):(
+                            <Col xs={12} className="text-center">
+                              <div>No likes yet</div>
+                              <EmojiFrownFill />
+                            </Col>
+                          )}
                         </Row>
                       </Col>
                     </Row>
