@@ -20,6 +20,7 @@ function MapView({
 	fetchNearPeople,
 }) {
 	const [point, setPoint] = useState(null);
+	const [pointError, setPointError] = useState(null);
 	const [moved, setMoved] = useState(false);
 
 	function ChangeView({center, active}) {
@@ -39,7 +40,10 @@ function MapView({
 			fetchNearPeople(point);
 			var watcher = positionWatcher(point, setPoint);
 		} else {
-			navigator.geolocation.getCurrentPosition((pos) => setPoint({lat: pos.coords.latitude, long: pos.coords.longitude}));
+			navigator.geolocation.getCurrentPosition(
+				(pos) => setPoint({lat: pos.coords.latitude, long: pos.coords.longitude}),
+				(err) => setPointError(err)
+			);
 		}
 		setMoved(true);
 
@@ -59,7 +63,7 @@ function MapView({
 		<Container fluid className="map-page">
 			<Row className="map-row text-center">
 				<Col xs={12} md={11} lg={11} xl={4}>
-					{point && (
+					{point ? (
 						<Map
 							className="map-container"
 							center={[point.lat, point.long]}
@@ -93,6 +97,16 @@ function MapView({
 								)
 							)}
 						</Map>
+					) : (
+						<Container fluid className="map-container">
+							<Row className="d-flex align-items-center h-100 text-white">
+								<Col>
+									{pointError && (
+										<p className="h5">Could not access your geolocation, please try again.</p>
+									)}
+								</Col>
+							</Row>
+						</Container>
 					)}
 				</Col>
 			</Row>
