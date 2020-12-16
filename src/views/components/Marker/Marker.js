@@ -21,7 +21,7 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-function Marker({user, updateLike}) {
+function Marker({user, updateLike, openChatRoom}) {
   const long = user.location.coordinates[0]
   const lat = user.location.coordinates[1]
   const { name, avatar, currentSong, like, spotifyID } = user;
@@ -31,6 +31,10 @@ function Marker({user, updateLike}) {
   function handleLike() {
     updateLike(currentSong, user.spotifyID);
     setSongLike(!songLike);
+  }
+
+  function handleChat(){
+    openChatRoom(user.id);
   }
 
   return (
@@ -53,6 +57,7 @@ function Marker({user, updateLike}) {
                       size={20}
                       className="chat-icon"
                       color="white"
+                      onClick={handleChat}
                     />
                   </Link>
                 </Col>

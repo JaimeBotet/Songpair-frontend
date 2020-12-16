@@ -17,7 +17,7 @@ import "leaflet/dist/leaflet.css";
 function MapView({
 	currentUserState: { isAuthenticated } = {},
 	communityState: { nearPeopleLoading, nearPeopleLoadingError, nearPeopleData } = {},
-	fetchNearPeople,
+	fetchNearPeople
 }) {
 	const [point, setPoint] = useState(null);
 	const [moved, setMoved] = useState(false);

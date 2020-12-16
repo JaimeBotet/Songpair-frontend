@@ -1,5 +1,5 @@
 import { Redirect, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import useUpdateLocation from "../../hooks/useUpdateLocation"
 
 import { ChatLeftDotsFill} from "react-bootstrap-icons"
@@ -19,7 +19,7 @@ function ChatsView({
 
   useEffect(() => {
     getChats();
-}, []);
+  }, [getChats]);
 
   // Redirect if not logged
   if (!isAuthenticated) {
