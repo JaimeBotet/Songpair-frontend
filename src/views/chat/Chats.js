@@ -7,7 +7,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 import Header from "../components/Header/Header";
 
-import "./Chat.scss"
+import "./Chats.scss"
 import ROUTES from "../../utils/routes";
 
 function ChatsView({

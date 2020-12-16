@@ -30,8 +30,7 @@ function ChatRoom({
   const [messages, setMessages] = useState([]);
 
 
-  useEffect(() => {
-    
+  useEffect(() => {  
     socket = io(ENDPOINT);
     const room = window.location.pathname.substring(6);
     const name = "test";
@@ -44,7 +43,7 @@ function ChatRoom({
         alert(error);
       }
     });
-  }, [ENDPOINT, window.location.search]);
+  }, [ENDPOINT, window.location]);
   
   useEffect(() => {
     socket.on('message', message => {
@@ -54,7 +53,7 @@ function ChatRoom({
     socket.on("roomData", ({ users }) => {
       setUsers(users);
     });
-}, []);
+  }, []);
 
   const sendMessage = (event) => {
     event.preventDefault();

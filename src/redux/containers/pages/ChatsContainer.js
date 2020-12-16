@@ -4,15 +4,15 @@ import { currentUserStateSelector } from "../../user/user-selectors";
 import { updateUserLocation } from '../../user/user-actions';
 import { getChats } from '../../community/community-actions';
 
-import Chat from "../../../views/chat/Chat";
+import Chats from "../../../views/chat/Chats";
 
-const chatStateToProps = (state) => ({
+const chatsStateToProps = (state) => ({
   currentUserState: currentUserStateSelector(state),
 });
 
-const chatDispatchToProps = (dispatch) => ({
+const chatsDispatchToProps = (dispatch) => ({
   getChats: () => dispatch(getChats()),
   updateUserLocation: (point) => dispatch(updateUserLocation(point)),
 });
 
-export default connect(chatStateToProps, chatDispatchToProps)(Chat);
+export default connect(chatsStateToProps, chatsDispatchToProps)(Chats);
