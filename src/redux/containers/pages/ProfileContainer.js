@@ -4,7 +4,7 @@ import { currentUserStateSelector } from "../../user/user-selectors";
 import { communityStateSelector } from "../../community/community-selectors";
 
 import { updateUserLocation, updateLike } from '../../user/user-actions';
-import { getProfile } from '../../community/community-actions';
+import { getProfile, updateProfile } from '../../community/community-actions';
 
 import Profile from "../../../views/profile/Profile";
 
@@ -16,6 +16,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   updateUserLocation: (point) => dispatch(updateUserLocation(point)),
   getProfile: (id) => dispatch(getProfile(id)),
+  updateProfile: (id) => dispatch(updateProfile(id)),
   updateLike: (song, receiver) => dispatch(updateLike(song, receiver)),
 });
 

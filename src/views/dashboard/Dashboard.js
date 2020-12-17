@@ -33,7 +33,7 @@ function Dashboard({
           <Col className="text-right">
             <Power role="button" size={25} onClick={logoutHandler}/>
           </Col>
-          <Col xs={12} className="text-center">
+          <Col xs={12} className="text-center fade-in">
             <img className="avatar" src={currentUser.avatar} alt="user avatar"></img>
             <span className="username">{currentUser.name}</span>
           </Col>

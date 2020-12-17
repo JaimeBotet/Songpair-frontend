@@ -3,7 +3,7 @@ import { Redirect, useParams } from "react-router-dom";
 import useUpdateLocation from "../../hooks/useUpdateLocation"
 
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
-import { HeartFill, Heart, MusicNoteList } from 'react-bootstrap-icons';
+import { HeartFill, Heart, MusicNoteList, ExclamationTriangleFill, EmojiFrownFill } from 'react-bootstrap-icons';
 import Header from "../components/Header/Header";
 
 import ROUTES from "../../utils/routes";
@@ -12,10 +12,9 @@ import "./Profile.scss";
 function Profile({
   currentUserState: { currentUser, isAuthenticated } = {},
   communityState: { profile, loadingProfile, profileError } = {},
-  updateUserLocation, getProfile, updateLike
+  updateUserLocation, getProfile, updateLike, updateProfile
 }) {
   const { id } = useParams();
-  const { name, avatar, currentSong } = profile;
 
   useUpdateLocation(updateUserLocation);
 
@@ -23,9 +22,10 @@ function Profile({
 		getProfile(id);
   }, [getProfile, id]);
 
-  function handleLike() {
-    updateLike(currentSong, id);
-    currentSong.like = !currentSong.like;
+  async function handleLike() {
+    profile.currentSong.like = !profile.currentSong.like;
+    await updateLike(profile.currentSong, id);
+    updateProfile(id);
   }
 
   // Redirect if not logged
@@ -44,27 +44,27 @@ function Profile({
               lg={{ span: 6, offset: 3}}
               xl={{ span: 4, offset: 4}}
             >
-              {!loadingProfile ? (
+              { (profile && !loadingProfile && !profileError) && (
                 <Row className="profile-page fade-in">
                   <Col xs={12} className="avatar">
-                    <img src={avatar} alt="user avatar" />
-                    <h4>{name}</h4>
+                    <img src={profile.avatar} alt="user avatar" />
+                    <h4>{profile.name}</h4>
                   </Col>
                   <Col xs={11}>
                     <Col xs={12} className="text-center">Currently playing</Col>
                     <Row className="playing">
-                      { currentSong ? (
+                      { profile.currentSong ? (
                         <>
                           <Col xs={3}>
-                            <img src={currentSong.image[0].url} alt="album" />
+                            <img src={profile.currentSong.image[0].url} alt="album" />
                           </Col>
                           <Col xs={6} xl={7} className="music">
-                            <div className="music-title">{currentSong.music}</div>
-                            <div>{currentSong.artist}</div>
+                            <div className="music-title">{profile.currentSong.music}</div>
+                            <div>{profile.currentSong.artist}</div>
                           </Col>
                           <Col xs={3} xl={2} className="music-actions">
                             <div>
-                              { currentSong.like ? (
+                              { profile.currentSong.like ? (
                                 <HeartFill
                                   className="bounce-effect"
                                   role="button"
@@ -79,7 +79,7 @@ function Profile({
                                   onClick={handleLike}
                                 />
                               )}
-                              <span>101</span>
+                              <span>{ profile.currentSong.totalLikes }</span>
                             </div>
                             <div><MusicNoteList /><span>Add</span></div>
                           </Col>
@@ -95,20 +95,29 @@ function Profile({
                         <Row>
                           <Col xs={12}><h5>Total Likes</h5></Col>
                           <Col xs={12}><HeartFill color="crimson"/></Col>
-                          <Col xs={12}>101</Col>
+                          <Col xs={12}>{profile.likes.total}</Col>
                         </Row>
                       </Col>
                       <Col xs={8} className="most-liked">
                         <Row>
                           <Col xs={12}><h5>Most Liked Song</h5></Col>
-                          <Col xs={6}>
-                            <img src="https://i.scdn.co/image/ab67616d0000b273c6f7af36ecdc3ed6e0a1f169" alt="album" />
-                          </Col>
-                          <Col xs={6} className="music">
-                            <div className="music-title">Dance Monkey</div>
-                            <div>Tones And I</div>
-                            <div><HeartFill color="crimson" /><span>101</span></div>
-                          </Col>
+                          { profile.likes.mostLiked ? (
+                            <>
+                              <Col xs={6}>
+                                <img src={profile.likes.mostLiked.image[0].url} alt="album" />
+                              </Col>
+                              <Col xs={6} className="music">
+                                <div className="music-title">{profile.likes.mostLiked.music}</div>
+                                <div>{profile.likes.mostLiked.artist}</div>
+                                <div><HeartFill color="crimson" /><span>{profile.likes.mostLiked.likesCount}</span></div>
+                              </Col>
+                            </>
+                          ):(
+                            <Col xs={12} className="text-center">
+                              <div>No likes yet</div>
+                              <EmojiFrownFill />
+                            </Col>
+                          )}
                         </Row>
                       </Col>
                     </Row>
@@ -117,10 +126,17 @@ function Profile({
                     Message
                   </Col>
                 </Row>
-              ) : (
+              )}
+              { loadingProfile && (
                 <Row className="songpair-load">
                   <Col xs={12}><h2>Songpair</h2></Col>
                   <Spinner animation="border" variant="primary" />
+                </Row>
+              )}
+              { profileError && (
+                <Row className="songpair-load">
+                  <Col xs={12}><h2>User not found :(</h2></Col>
+                  <ExclamationTriangleFill />
                 </Row>
               )}
             </Col>

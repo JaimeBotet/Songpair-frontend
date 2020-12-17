@@ -19,6 +19,7 @@ const CommunityReducer = (state = CommunityInitialState, action) => {
         ...state,
         nearPeopleLoading: true,
         nearPeopleLoadingError: null,
+        nearPeopleData: null,
       };
     }
     case CommunityTypes.FETCH_NEAR_PEOPLE_ERROR: {
@@ -26,6 +27,7 @@ const CommunityReducer = (state = CommunityInitialState, action) => {
         ...state,
         nearPeopleLoading: false,
         nearPeopleLoadingError: action.payload,
+        nearPeopleData: null,
       };
     }
     case CommunityTypes.FETCH_NEAR_PEOPLE_SUCCESS: {

@@ -103,6 +103,37 @@ export function getProfile(id) {
   };
 }
 
+export function updateProfile(id) {
+  return async function getProfileThunk(dispatch, getState) {
+
+    const token = getState().user.currentUser.token;
+
+    if (token) {
+
+      const res = await fetch(`${getProfileURI}/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }
+      }).catch((error) => dispatch(getProfileError(error.message)));
+
+      const resJson = await res
+      .json()
+      .catch((error) => dispatch(getProfileError(error.message)));
+
+      if (res.ok) {
+        dispatch(getProfileSuccess(resJson.data));
+      } else {
+        dispatch(getProfileError(resJson.error));
+      }
+
+    } else {
+      dispatch(getProfileError("Missing auth token"));
+    }
+  };
+}
+
 export function getChats(){
   return async function getUserChatsThunk(dispatch, getState) {
 
