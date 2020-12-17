@@ -1,5 +1,5 @@
 import { Redirect, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import useUpdateLocation from "../../hooks/useUpdateLocation"
 
 import { ChatLeftDotsFill} from "react-bootstrap-icons"
@@ -7,10 +7,10 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 import Header from "../components/Header/Header";
 
-import "./Chat.scss"
+import "./Chats.scss"
 import ROUTES from "../../utils/routes";
 
-function ChatView({
+function ChatsView({
   currentUserState: { currentUser, isAuthenticated } = {},
   getChats, updateUserLocation
 }) {
@@ -19,7 +19,7 @@ function ChatView({
 
   useEffect(() => {
     getChats();
-}, []);
+  }, [getChats]);
 
   // Redirect if not logged
   if (!isAuthenticated) {
@@ -29,40 +29,32 @@ function ChatView({
 
   return (
     <>
-    <Header title="Chat Room" back={ROUTES.DASHBOARD} />  
+    <Header title="Join Chat" back={ROUTES.DASHBOARD} />  
     <Container fluid className="chat py-3">
-        <Row className="header">
-          <Col>
-            <div className="logo">Songpair</div>
-          </Col>
-          
+        <Row className="header">          
           <Col xs={12} className="text-center">
-            <span className="username">{currentUser.name}</span>
+            <span className="username">Select Chat Room</span>
           </Col>
         </Row>
         <Row className="menu">
           <Col xs={12} className="mt-4">
-            <Link to="/chat/room/1">
+            <Link to="/chat/1">
               <ChatLeftDotsFill color="white" size={100}/>
-              <span className="username">Room 1</span>
             </Link>
           </Col>
           <Col xs={12} className="mt-4">
-            <Link to="/chat/room/2">
+            <Link to="/chat/2">
               <ChatLeftDotsFill color="white" size={100}/>
-              <span className="username">Room 2</span>
             </Link>
           </Col>
           <Col xs={12} className="mt-4">
-            <Link to="/chat/room/3">
+            <Link to="/chat/3">
               <ChatLeftDotsFill color="white" size={100}/>
-              <span className="username">Room 3</span>
             </Link>
           </Col>
           <Col xs={12} className="mt-4">
-            <Link to="/chat/room/4">
+            <Link to="/chat/4">
               <ChatLeftDotsFill color="white" size={100}/>
-              <span className="username">Room 4</span>
             </Link>
           </Col>
         </Row>
@@ -71,4 +63,4 @@ function ChatView({
   );
 }
 
-export default ChatView;
+export default ChatsView;

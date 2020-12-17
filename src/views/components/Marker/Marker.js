@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import {Row, Col} from 'react-bootstrap';
 import { Marker as MarkerIcon, Popup } from 'react-leaflet';
-import { HeartFill, Heart } from 'react-bootstrap-icons';
+import { HeartFill, Heart, ChatLeftDots } from 'react-bootstrap-icons';
 
 import L from 'leaflet';
 import icon from '../../../assets/map/marker.png';
@@ -21,7 +21,7 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-function Marker({user, updateLike}) {
+function Marker({user, updateLike, openChatRoom}) {
   const long = user.location.coordinates[0]
   const lat = user.location.coordinates[1]
   const { name, avatar, currentSong, like, spotifyID } = user;
@@ -31,6 +31,10 @@ function Marker({user, updateLike}) {
   function handleLike() {
     updateLike(currentSong, user.spotifyID);
     setSongLike(!songLike);
+  }
+
+  function handleChat(){
+    openChatRoom(user.id);
   }
 
   return (
@@ -44,8 +48,18 @@ function Marker({user, updateLike}) {
                       alt="user avatar"
                   />
                 </Col>
-                <Col xs={10} className="username-container">
+                <Col xs={8} className="username-container">
                   <Link to={ROUTES.PROFILE + spotifyID}>{name}</Link>
+                </Col>
+                <Col xs={2}>
+                  <Link to={ROUTES.CHAT}>
+                    <ChatLeftDots
+                      size={20}
+                      className="chat-icon"
+                      color="white"
+                      onClick={handleChat}
+                    />
+                  </Link>
                 </Col>
             </Row>
             <Row>
