@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import queryString from 'query-string';
 import io from "socket.io-client";
 import { Redirect } from "react-router-dom";
 
 import Header from "../components/Header/Header";
-import TextContainer from '../components/TextContainer/TextContainer';
 import Messages from '../components/Messages/Messages';
 import InfoBar from '../components/InfoBar/InfoBar';
 import Input from '../components/Input/Input';
@@ -25,14 +23,14 @@ function ChatRoom({
   
   const [user, setUser] = useState(currentUser);
   const [room, setRoom] = useState('');
-  const [users, setUsers] = useState('');
+  // const [users, setUsers] = useState('');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
 
   useEffect(() => {
 
-    socket = io(ENDPOINT);
+    socket = isAuthenticated ? io(ENDPOINT, {withCredentials: true}) : null;
     const room = window.location.pathname.substring(6);
     // const name = "test";
 
@@ -45,20 +43,20 @@ function ChatRoom({
     });
 
     return () => {
-      socket.emit('disconnect', {user, room});
+      // socket.emit('disconnect', {user, room});
 
       socket.off();
     }
-  }, [ENDPOINT, window.location]);
+  }, [user]);
   
   useEffect(() => {
     socket.on('message', message => {
       setMessages(messages => [ ...messages, message ]);
     });
     
-    socket.on("roomData", ({ users }) => {
-      setUsers(users);
-    });
+    // socket.on("roomData", ({ users }) => {
+    //   setUsers(users);
+    // });
   }, []);
 
   const sendMessage = (event) => {
@@ -83,7 +81,6 @@ function ChatRoom({
           <Messages messages={messages} name={user.name} />
           <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
-      <TextContainer users={users}/>
     </div>
     </>
   );
