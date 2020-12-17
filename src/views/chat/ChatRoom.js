@@ -20,29 +20,35 @@ let socket;
 
 
 function ChatRoom({
-  currentUserState: { isAuthenticated } = {},
+  currentUserState: { isAuthenticated, currentUser } = {},
 }) {
   
-  const [name, setName] = useState('');
+  const [user, setUser] = useState(currentUser);
   const [room, setRoom] = useState('');
   const [users, setUsers] = useState('');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
 
-  useEffect(() => {  
+  useEffect(() => {
+
     socket = io(ENDPOINT);
     const room = window.location.pathname.substring(6);
-    const name = "test";
+    // const name = "test";
 
     setRoom(room);
-    setName(name)
 
-    socket.emit('join', { name, room }, (error) => {
+    socket.emit('join', { user, room }, (error) => {
       if(error) {
         alert(error);
       }
     });
+
+    return () => {
+      socket.emit('disconnect', {user, room});
+
+      socket.off();
+    }
   }, [ENDPOINT, window.location]);
   
   useEffect(() => {
@@ -59,7 +65,7 @@ function ChatRoom({
     event.preventDefault();
 
     if(message) {
-      socket.emit('sendMessage', message, () => setMessage(''));
+      socket.emit('sendMessage', { user, room, message } , () => setMessage(''));
     }
   }
 
@@ -74,7 +80,7 @@ function ChatRoom({
     <div className="outerContainer">
       <div className="container">
           <InfoBar room={room} />
-          <Messages messages={messages} name={name} />
+          <Messages messages={messages} name={user.name} />
           <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
       <TextContainer users={users}/>
