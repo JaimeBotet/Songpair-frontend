@@ -36,7 +36,7 @@ function App() {
         <Route path={ROUTES.ROOMS}>
           <ChatsContainer />
         </Route>
-        <Route path={ROUTES.CHAT + "/:roomId"}>
+        <Route path={ROUTES.CHAT + ":roomId"}>
           <ChatRoomContainer />
         </Route>
       </Switch>
