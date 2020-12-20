@@ -52,7 +52,7 @@ function Marker({user, updateLike, openChatRoom}) {
                   <Link to={ROUTES.PROFILE + spotifyID}>{name}</Link>
                 </Col>
                 <Col xs={2}>
-                  <Link to={ROUTES.CHAT}>
+                  <Link to={ROUTES.CHAT + spotifyID}>
                     <ChatLeftDots
                       size={20}
                       className="chat-icon"

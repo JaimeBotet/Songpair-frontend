@@ -5,7 +5,7 @@ const ROUTES = {
     DASHBOARD: "/dashboard",
     MAP: "/map",
     PROFILE: "/profile/",
-    CHAT: "/chat",
+    CHAT: "/chat/",
     ROOMS: "/chats",
   };
 
