@@ -34,7 +34,7 @@ function Marker({user, updateLike, openChatRoom}) {
   }
 
   function handleChat(){
-    openChatRoom(user.id);
+    openChatRoom(spotifyID);
   }
 
   return (
@@ -52,14 +52,14 @@ function Marker({user, updateLike, openChatRoom}) {
                   <Link to={ROUTES.PROFILE + spotifyID}>{name}</Link>
                 </Col>
                 <Col xs={2}>
-                  <Link to={ROUTES.CHAT + spotifyID}>
                     <ChatLeftDots
                       size={20}
                       className="chat-icon"
                       color="white"
                       onClick={handleChat}
                     />
-                  </Link>
+                  {/* <Link to={ROUTES.CHAT + spotifyID}>
+                  </Link> */}
                 </Col>
             </Row>
             <Row>

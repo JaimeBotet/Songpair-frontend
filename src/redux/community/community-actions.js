@@ -47,9 +47,9 @@ export const openRoomRequest = () => ({
   type: CommunityTypes.OPEN_CHAT_ROOM_REQUEST
 });
 
-export const openRoomSuccess = (room) => ({
+export const openRoomSuccess = (roomId) => ({
   type: CommunityTypes.OPEN_CHAT_ROOM_SUCCESS,
-  payload: room
+  payload: roomId
 });
 
 export const openRoomError = (error) => ({
@@ -157,7 +157,7 @@ export function getChats(){
     if (token) {
       dispatch(getChatsRequest());
 
-      const res = await fetch(`${getChatsURI}/${id}`, {
+      const res = await fetch(`${getChatsURI}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -185,7 +185,6 @@ export function openChatRoom(participant){
   return async function openChatRoomThunk(dispatch, getState) {
 
     const token = getState().user.currentUser.token;
-    const id = getState().user.currentUser.id;
 
     if (token) {
       dispatch(openRoomRequest());
@@ -197,7 +196,7 @@ export function openChatRoom(participant){
           Authorization: `Bearer ${token}`,
         },
         body:{
-          user: id,
+          user: token,
           participant: participant
         }
       }).catch((error) => dispatch(getChatsError(error.message)));
