@@ -23,7 +23,6 @@ function ChatRoom({
   
   const [user, setUser] = useState(currentUser);
   const [room, setRoom] = useState('');
-  // const [users, setUsers] = useState('');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
@@ -32,7 +31,6 @@ function ChatRoom({
 
     socket = isAuthenticated ? io(ENDPOINT, {withCredentials: true}) : null;
     const room = window.location.pathname.substring(6);
-    // const name = "test";
 
     setRoom(room);
 
@@ -43,20 +41,15 @@ function ChatRoom({
     });
 
     return () => {
-      // socket.emit('disconnect', {user, room});
-
+      socket.emit('leaveChat', {user, room});
       socket.off();
     }
-  }, [user]);
+  }, [user, isAuthenticated]);
   
   useEffect(() => {
     socket.on('message', message => {
       setMessages(messages => [ ...messages, message ]);
     });
-    
-    // socket.on("roomData", ({ users }) => {
-    //   setUsers(users);
-    // });
   }, []);
 
   const sendMessage = (event) => {
