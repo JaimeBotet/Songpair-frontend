@@ -35,6 +35,7 @@ function Marker({user, updateLike, openChatRoom}) {
 
   function handleChat(){
     openChatRoom(spotifyID);
+    
   }
 
   return (

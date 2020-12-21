@@ -195,10 +195,10 @@ export function openChatRoom(participant){
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body:{
-          user: token,
-          participant: participant
-        }
+        body: JSON.stringify({
+          sender: token,
+          receiver: participant
+        }),
       }).catch((error) => dispatch(getChatsError(error.message)));
 
       const resJson = await res

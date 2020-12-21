@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
-import { Redirect } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 
 import Header from "../components/Header/Header";
 import Messages from '../components/Messages/Messages';
@@ -30,18 +30,18 @@ function ChatRoom({
   useEffect(() => {
 
     socket = isAuthenticated ? io(ENDPOINT, {withCredentials: true}) : null;
-    const room = window.location.pathname.substring(6);
+    const {roomId} = useParams();
 
-    setRoom(room);
+    setRoom(roomId);
 
-    socket.emit('join', { user, room }, (error) => {
+    socket.emit('join', { user, roomId }, (error) => {
       if(error) {
         alert(error);
       }
     });
 
     return () => {
-      socket.emit('leaveChat', {user, room});
+      socket.emit('leaveChat', {user, roomId});
       socket.off();
     }
   }, [user, isAuthenticated]);
@@ -56,7 +56,7 @@ function ChatRoom({
     event.preventDefault();
 
     if(message) {
-      socket.emit('sendMessage', { user, room, message } , () => setMessage(''));
+      socket.emit('sendMessage', { user, roomId, message } , () => setMessage(''));
     }
   }
 
@@ -70,7 +70,7 @@ function ChatRoom({
     <Header title="Chat Room" back={ROUTES.ROOMS} />
     <div className="outerContainer">
       <div className="container">
-          <InfoBar room={room} />
+          <InfoBar room={roomId} />
           <Messages messages={messages} name={user.name} />
           <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
