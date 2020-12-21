@@ -39,7 +39,7 @@ function Marker({
   }
 
   async function handleChat(){
-    openChatRoom(spotifyID);
+    await openChatRoom(spotifyID);
     if (openChatData) history.push(ROUTES.CHAT + openChatData);
   }
 
