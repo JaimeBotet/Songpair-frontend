@@ -206,7 +206,7 @@ export function openChatRoom(participant){
       .catch((error) => dispatch(openRoomError(error.message)));
 
       if (res.ok) {
-        dispatch(openRoomSuccess(resJson.data.data));
+        dispatch(openRoomSuccess(resJson.data));
       } else {
         dispatch(openRoomError(resJson.error));
       }

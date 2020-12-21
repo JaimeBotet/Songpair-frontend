@@ -31,7 +31,7 @@ function ChatRoom({
   useEffect(() => {
 
     socket = isAuthenticated ? io(ENDPOINT, {withCredentials: true}) : null;
-
+    console.log("connecting to room: " + roomId);
     setRoom(roomId);
 
     socket.emit('join', { user, roomId }, (error) => {
@@ -44,7 +44,7 @@ function ChatRoom({
       socket.emit('leaveChat', {user, roomId});
       socket.off();
     }
-  }, [user, isAuthenticated]);
+  }, [user, isAuthenticated, roomId]);
 
   useEffect(() => {
     socket.on('message', message => {
