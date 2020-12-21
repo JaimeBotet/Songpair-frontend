@@ -20,7 +20,8 @@ let socket;
 function ChatRoom({
   currentUserState: { isAuthenticated, currentUser } = {},
 }) {
-  
+  const {roomId} = useParams();
+
   const [user, setUser] = useState(currentUser);
   const [room, setRoom] = useState('');
   const [message, setMessage] = useState('');
@@ -30,7 +31,6 @@ function ChatRoom({
   useEffect(() => {
 
     socket = isAuthenticated ? io(ENDPOINT, {withCredentials: true}) : null;
-    const {roomId} = useParams();
 
     setRoom(roomId);
 
@@ -45,7 +45,7 @@ function ChatRoom({
       socket.off();
     }
   }, [user, isAuthenticated]);
-  
+
   useEffect(() => {
     socket.on('message', message => {
       setMessages(messages => [ ...messages, message ]);
