@@ -30,6 +30,7 @@ function ChatRoom({
 
   useEffect(() => {
 
+    //ENDPOINT will be substituted with IP Address
     socket = isAuthenticated ? io(ENDPOINT, {withCredentials: true}) : null;
     console.log("connecting to room: " + roomId);
     setRoom(roomId);

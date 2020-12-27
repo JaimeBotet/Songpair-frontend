@@ -47,9 +47,9 @@ export const openRoomRequest = () => ({
   type: CommunityTypes.OPEN_CHAT_ROOM_REQUEST
 });
 
-export const openRoomSuccess = (roomId) => ({
+export const openRoomSuccess = (room) => ({
   type: CommunityTypes.OPEN_CHAT_ROOM_SUCCESS,
-  payload: roomId
+  payload: room
 });
 
 export const openRoomError = (error) => ({

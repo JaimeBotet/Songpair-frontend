@@ -40,7 +40,8 @@ function Marker({
 
   async function handleChat(){
     await openChatRoom(spotifyID);
-    if (openChatData) history.push(ROUTES.CHAT + openChatData);
+    
+    if (openChatData) history.push(ROUTES.CHAT + openChatData._id);
   }
 
   return (
