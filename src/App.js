@@ -1,5 +1,7 @@
 import React from 'react';
 import {Switch, Route } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import io from "socket.io-client";
 
 import WelcomeContainer from "./redux/containers/pages/WelcomeContainer";
 import LoginContainer from "./redux/containers/pages/LoginContainer";
@@ -11,24 +13,19 @@ import ChatsContainer from "./redux/containers/pages/ChatsContainer";
 import ChatRoomContainer from "./redux/containers/pages/ChatRoomContainer";
 
 import ROUTES from "./utils/routes";
-
-// import chatsListener from "./utils/chatsListener";
-
-import io from "socket.io-client";
-
 import {apiDomain} from './config/config';
 
-const ENDPOINT = apiDomain;
-
-const socket = io(ENDPOINT, {withCredentials: true});
-socket.onAny((eventName, ...args) => {
-    if(eventName === 'connection'){
-        alert("A User wants to chat with you");
-        //here we filter with the user
-    }
-});
-
 function App() {
+  const { user } = useSelector((state) => state);
+
+  const socket = user.currentUser.token ? io(apiDomain, {withCredentials: true, query: `token=${user.currentUser.token}`}) : null;
+
+  if (socket) {
+    socket.on('newMessage', async ({ sender }) => {
+      console.log(`New chat request from ${sender}!`);
+    });
+  }
+
   return (
       <Switch>
         <Route path={ROUTES.HOME} exact>
@@ -44,7 +41,7 @@ function App() {
           <ProfileContainer />
         </Route>
         <Route path={ROUTES.MAP}>
-          <MapContainer />
+          <MapContainer appSocket={socket} />
         </Route>
         <Route path={ROUTES.REGISTER}>
           <RegisterContainer />
