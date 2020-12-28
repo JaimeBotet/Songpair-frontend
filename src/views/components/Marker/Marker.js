@@ -23,7 +23,7 @@ L.Marker.prototype.options.icon = DefaultIcon;
 
 function Marker({
   communityState: { openChatLoading, openChatError, openChatData } = {},
-  user, updateLike, openChatRoom
+  user, updateLike, openChatRoom, appSocket, currentUser
 }) {
   const history = useHistory();
 
@@ -39,8 +39,9 @@ function Marker({
   }
 
   async function handleChat(){
+    appSocket.emit('newChat', {sender: currentUser.name,receiver: spotifyID})
     await openChatRoom(spotifyID);
-    
+
     if (openChatData) history.push(ROUTES.CHAT + openChatData._id);
   }
 
