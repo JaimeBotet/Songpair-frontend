@@ -15,9 +15,9 @@ import "leaflet/dist/leaflet.css";
 
 
 function MapView({
-	currentUserState: { isAuthenticated } = {},
+	currentUserState: { isAuthenticated, currentUser } = {},
 	communityState: { nearPeopleLoading, nearPeopleLoadingError, nearPeopleData } = {},
-	fetchNearPeople
+	fetchNearPeople, appSocket
 }) {
 	const [point, setPoint] = useState(null);
 	const [pointError, setPointError] = useState(null);
@@ -91,6 +91,8 @@ function MapView({
 											<Marker
 												key={user.spotifyID}
 												user={user}
+												appSocket={appSocket}
+												currentUser={currentUser}
 											/>
 										)}
 									</>
