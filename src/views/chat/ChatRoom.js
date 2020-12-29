@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import io from "socket.io-client";
 import { Redirect, useParams } from "react-router-dom";
 
 import Header from "../components/Header/Header";
@@ -7,57 +6,42 @@ import Messages from '../components/Messages/Messages';
 import InfoBar from '../components/InfoBar/InfoBar';
 import Input from '../components/Input/Input';
 
-import {apiDomain} from '../../config/config';
 import ROUTES from "../../utils/routes";
 
 import './ChatRoom.scss';
 
-const ENDPOINT = apiDomain;
-
-let socket;
-
-
 function ChatRoom({
   currentUserState: { isAuthenticated, currentUser } = {},
+  appSocket
 }) {
-  const {roomId} = useParams();
+  const {room} = useParams();
+  const user = currentUser;
 
-  const [user, setUser] = useState(currentUser);
-  const [room, setRoom] = useState('');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
-
   useEffect(() => {
-
-    //ENDPOINT will be substituted with IP Address
-    socket = isAuthenticated ? io(ENDPOINT, {withCredentials: true}) : null;
-    console.log("connecting to room: " + roomId);
-    setRoom(roomId);
-
-    socket.emit('join', { user, roomId }, (error) => {
-      if(error) {
-        alert(error);
-      }
+    appSocket.emit('join', { user, room }, (error) => {
+      if(error) alert(error);
     });
 
     return () => {
-      socket.emit('leaveChat', {user, roomId});
-      socket.off();
+      appSocket.emit('leaveChat', { user, room });
+      appSocket.off();
     }
-  }, [user, isAuthenticated, roomId]);
+  }, [user, isAuthenticated, room, appSocket]);
 
   useEffect(() => {
-    socket.on('message', message => {
+    appSocket.on('message', message => {
       setMessages(messages => [ ...messages, message ]);
     });
-  }, []);
+  }, [appSocket]);
 
   const sendMessage = (event) => {
     event.preventDefault();
 
     if(message) {
-      socket.emit('sendMessage', { user, roomId, message } , () => setMessage(''));
+      appSocket.emit('sendMessage', { user, room, message } , () => setMessage(''));
     }
   }
 
@@ -71,7 +55,7 @@ function ChatRoom({
     <Header title="Chat Room" back={ROUTES.ROOMS} />
     <div className="outerContainer">
       <div className="container">
-          <InfoBar room={roomId} />
+          <InfoBar room={room} />
           <Messages messages={messages} name={user.name} />
           <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
@@ -79,6 +63,5 @@ function ChatRoom({
     </>
   );
 }
-
 
 export default ChatRoom;
