@@ -1,5 +1,5 @@
-import React from 'react';
-import {Switch, Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Switch, Route } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import io from "socket.io-client";
 
@@ -11,22 +11,26 @@ import DashboardContainer from "./redux/containers/pages/DashboardContainer";
 import ProfileContainer from "./redux/containers/pages/ProfileContainer";
 import ChatsContainer from "./redux/containers/pages/ChatsContainer";
 import ChatRoomContainer from "./redux/containers/pages/ChatRoomContainer";
+import Notification from "./views/components/Notification/Notification";
 
 import ROUTES from "./utils/routes";
 import {apiDomain} from './config/config';
 
 function App() {
   const { user } = useSelector((state) => state);
+  const [notification, setNotification] = useState(null);
 
   const socket = user.currentUser.token ? io(apiDomain, {withCredentials: true, query: `token=${user.currentUser.token}`}) : null;
 
   if (socket) {
-    socket.on('newMessage', async ({ sender }) => {
-      console.log(`New chat request from ${sender}!`);
+    socket.on('newMessage', async ({ sender, room }) => {
+      setNotification({msg:`New chat request from ${sender}!`, room: room});
+      setTimeout( () => setNotification(null), 10000 )
     });
   }
 
   return (
+    <>
       <Switch>
         <Route path={ROUTES.HOME} exact>
           <WelcomeContainer />
@@ -49,10 +53,14 @@ function App() {
         <Route path={ROUTES.ROOMS}>
           <ChatsContainer />
         </Route>
-        <Route path={ROUTES.CHAT + ":roomId"}>
-          <ChatRoomContainer />
+        <Route path={ROUTES.CHAT + ":room"}>
+          <ChatRoomContainer appSocket={socket} />
         </Route>
       </Switch>
+      { notification &&
+        <Notification msg={notification.msg} room={notification.room} />
+      }
+      </>
   );
 }
 
