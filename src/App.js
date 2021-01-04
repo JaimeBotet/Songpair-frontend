@@ -25,7 +25,7 @@ function App() {
   if (socket) {
     socket.on('newMessage', async ({ sender, room }) => {
       setNotification({msg:`New chat request from ${sender}!`, room: room});
-      setTimeout( () => setNotification(null), 10000 )
+      setTimeout( () => setNotification(null), 10000 );
     });
   }
 
