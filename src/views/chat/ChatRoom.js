@@ -17,30 +17,34 @@ function ChatRoom({
   const {room} = useParams();
   const user = currentUser;
 
+  const [connected, setConnected] = useState(false);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    appSocket.emit('join', { user, room }, (error) => {
-      if(error) alert(error);
+    appSocket.on('message', message => {
+      console.log(message);
+      setMessages(messages => [ ...messages, message ]);
     });
 
     return () => {
       appSocket.emit('leaveChat', { user, room });
       appSocket.off();
     }
-  }, [user, isAuthenticated, room, appSocket]);
+  },[]);
 
-  useEffect(() => {
-    appSocket.on('message', message => {
-      setMessages(messages => [ ...messages, message ]);
+  const connect = () => {
+    appSocket.emit('join', { user, room }, (error) => {
+      if(error) alert(error);
+      setConnected(true);
     });
-  }, [appSocket]);
+  }
 
   const sendMessage = (event) => {
     event.preventDefault();
 
     if(message) {
+      setMessages(messages => [ ...messages, {user: "You", text: message} ]);
       appSocket.emit('sendMessage', { user, room, message } , () => setMessage(''));
     }
   }
@@ -55,9 +59,16 @@ function ChatRoom({
     <Header title="Chat Room" back={ROUTES.ROOMS} />
     <div className="outerContainer">
       <div className="container">
-          <InfoBar room={room} />
-          <Messages messages={messages} name={user.name} />
-          <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
+          <InfoBar room={""} />
+          { !connected ? (
+              <div className="btn btn-primary mb-4" onClick={connect}>Join chat</div>
+            ) : (
+              <>
+                <Messages messages={messages} name={user.name} />
+                <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
+              </>
+            )
+          }
       </div>
     </div>
     </>
