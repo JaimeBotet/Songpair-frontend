@@ -40,9 +40,11 @@ function Marker({
 
   async function handleChat(){
     await openChatRoom(spotifyID);
-    appSocket.emit('newChat', {sender: currentUser.name, receiver: spotifyID, room: openChatData._id})
 
-    if (openChatData) history.push(ROUTES.CHAT + openChatData._id);
+    if (openChatData) {
+      appSocket.emit('newChat', {sender: currentUser.name, receiver: spotifyID, room: openChatData._id})
+      history.push(ROUTES.CHAT + openChatData._id);
+    }
   }
 
   return (
