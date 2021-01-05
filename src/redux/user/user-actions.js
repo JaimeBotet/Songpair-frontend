@@ -1,5 +1,5 @@
 import UserTypes from "./user-types";
-import { signInFormURI, signUpURI, loginURI, updatePosURI, updateLikeURI } from "../../config/config";
+import { signInFormURI, signUpURI, loginURI, logoutURI, updatePosURI, updateLikeURI } from "../../config/config";
 
 export const resetStoreAndLogOut = () => ({
   type: UserTypes.RESET_STORE_AND_LOG_OUT,
@@ -178,7 +178,7 @@ export function signout() {
     if (token) {
       dispatch(signoutRequest());
 
-      const res = await fetch("http://localhost:8080/logout", {
+      const res = await fetch(logoutURI, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
