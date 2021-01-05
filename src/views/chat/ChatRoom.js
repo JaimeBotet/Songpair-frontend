@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Redirect, useParams } from "react-router-dom";
+import io from "socket.io-client";
 
 import Header from "../components/Header/Header";
 import Messages from '../components/Messages/Messages';
@@ -7,6 +8,7 @@ import InfoBar from '../components/InfoBar/InfoBar';
 import Input from '../components/Input/Input';
 
 import ROUTES from "../../utils/routes";
+import {apiDomain} from "../../config/config";
 
 import './ChatRoom.scss';
 
@@ -20,21 +22,23 @@ function ChatRoom({
   const [connected, setConnected] = useState(false);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const [socket] = useState(io(apiDomain) );
 
   useEffect(() => {
-    appSocket.on('message', message => {
-      console.log(message);
+    connect();
+
+    socket.on('message', message => {
       setMessages(messages => [ ...messages, message ]);
     });
 
     return () => {
-      appSocket.emit('leaveChat', { user, room });
-      appSocket.off();
+      socket.emit('leaveChat', { user, room });
+      socket.off();
     }
   },[]);
 
   const connect = () => {
-    appSocket.emit('join', { user, room }, (error) => {
+    socket.emit('join', { user, room }, (error) => {
       if(error) alert(error);
       setConnected(true);
     });
@@ -45,7 +49,7 @@ function ChatRoom({
 
     if(message) {
       setMessages(messages => [ ...messages, {user: "You", text: message} ]);
-      appSocket.emit('sendMessage', { user, room, message } , () => setMessage(''));
+      socket.emit('sendMessage', { user, room, message } , () => setMessage(''));
     }
   }
 
