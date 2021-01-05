@@ -178,7 +178,7 @@ export function signout() {
     if (token) {
       dispatch(signoutRequest());
 
-      const res = await fetch(logoutURI, {
+      const res = await fetch("http://localhost:8080/logout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
