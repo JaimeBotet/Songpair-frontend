@@ -47,7 +47,7 @@ function Login({
       <DownLayers active={transition} />
       <Row>
         <Col xs={12}>
-          <h1 className="text-white">Soundpair</h1>
+          <h1 className="text-white">Songpair</h1>
         </Col>
         {isLoggingIn ? (
           <Spinner animation="border" variant="primary" />
