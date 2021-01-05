@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-import {Row, Col} from 'react-bootstrap';
+import { HeartFill, Heart, ChatLeftDots } from 'react-bootstrap-icons';
+import { Row, Col, Spinner } from 'react-bootstrap';
 import { Marker as MarkerIcon, Popup } from 'react-leaflet';
-import { HeartFill, Heart } from 'react-bootstrap-icons';
 
 import L from 'leaflet';
 import icon from '../../../assets/map/marker.png';
@@ -21,7 +21,12 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-function Marker({user, updateLike}) {
+function Marker({
+  communityState: { openChatLoading, openChatError, openChatData } = {},
+  user, updateLike, openChatRoom, appSocket, currentUser
+}) {
+  const history = useHistory();
+
   const long = user.location.coordinates[0]
   const lat = user.location.coordinates[1]
   const { name, avatar, currentSong, like, spotifyID } = user;
@@ -31,6 +36,15 @@ function Marker({user, updateLike}) {
   function handleLike() {
     updateLike(currentSong, user.spotifyID);
     setSongLike(!songLike);
+  }
+
+  async function handleChat(){
+    await openChatRoom(spotifyID);
+
+    if (openChatData) {
+      appSocket.emit('newChat', {sender: currentUser.name, receiver: spotifyID, room: openChatData._id})
+      history.push(ROUTES.CHAT + openChatData._id);
+    }
   }
 
   return (
@@ -44,8 +58,24 @@ function Marker({user, updateLike}) {
                       alt="user avatar"
                   />
                 </Col>
-                <Col xs={10} className="username-container">
+                <Col xs={8} className="username-container">
                   <Link to={ROUTES.PROFILE + spotifyID}>{name}</Link>
+                </Col>
+                <Col xs={2}>
+                  {openChatLoading ? (
+                    <Spinner
+                      size="sm"
+                      animation="border"
+                      variant="white"
+                    />
+                  ) : (
+                    <ChatLeftDots
+                      size={18}
+                      className="chat-icon"
+                      color="white"
+                      onClick={handleChat}
+                    />
+                  )}
                 </Col>
             </Row>
             <Row>

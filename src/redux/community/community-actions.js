@@ -43,6 +43,20 @@ export const getChatsError = (message) => ({
   payload: message
 });
 
+export const openRoomRequest = () => ({
+  type: CommunityTypes.OPEN_CHAT_ROOM_REQUEST
+});
+
+export const openRoomSuccess = (room) => ({
+  type: CommunityTypes.OPEN_CHAT_ROOM_SUCCESS,
+  payload: room
+});
+
+export const openRoomError = (error) => ({
+  type: CommunityTypes.OPEN_CHAT_ROOM_ERROR,
+  payload: error
+});
+
 export function fetchNearPeople(point) {
   return async function fetchNearPeopleThunk(dispatch, getState) {
     dispatch(fetchNearPeopleRequest());
@@ -143,7 +157,7 @@ export function getChats(){
     if (token) {
       dispatch(getChatsRequest());
 
-      const res = await fetch(`${getChatsURI}/${id}`, {
+      const res = await fetch(`${getChatsURI}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -163,6 +177,42 @@ export function getChats(){
 
     } else {
       dispatch(getChatsError("Missing auth token"));
+    }
+  };
+}
+
+export function openChatRoom(participant){
+  return async function openChatRoomThunk(dispatch, getState) {
+
+    const token = getState().user.currentUser.token;
+
+    if (token) {
+      dispatch(openRoomRequest());
+
+      const res = await fetch(`${getChatsURI}/room`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          sender: token,
+          receiver: participant
+        }),
+      }).catch((error) => dispatch(getChatsError(error.message)));
+
+      const resJson = await res
+      .json()
+      .catch((error) => dispatch(openRoomError(error.message)));
+
+      if (res.ok) {
+        dispatch(openRoomSuccess(resJson.data));
+      } else {
+        dispatch(openRoomError(resJson.error));
+      }
+
+    } else {
+      dispatch(openRoomError("Missing auth token"));
     }
   };
 }

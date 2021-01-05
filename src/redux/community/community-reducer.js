@@ -9,7 +9,10 @@ const CommunityInitialState = {
   profile: null,
   chatsLoading: false,
   chatsError: null,
-  chats: null
+  chats: null,
+  openChatLoading: false,
+  openChatError: null,
+  openChatData: null,
 };
 
 const CommunityReducer = (state = CommunityInitialState, action) => {
@@ -78,6 +81,30 @@ const CommunityReducer = (state = CommunityInitialState, action) => {
         ...state,
         chatsLoading: false,
         chatsError: action.payload,
+      };
+    }
+    case CommunityTypes.OPEN_CHAT_ROOM_REQUEST: {
+      return {
+        ...state,
+        openChatLoading: true,
+        openChatError: null,
+        openChatData: null,
+      };
+    }
+    case CommunityTypes.OPEN_CHAT_ROOM_SUCCESS: {
+      return {
+        ...state,
+        openChatLoading: false,
+        openChatError: null,
+        openChatData: action.payload
+      };
+    }
+    case CommunityTypes.OPEN_CHAT_ROOM_ERROR: {
+      return {
+        ...state,
+        openChatLoading: false,
+        openChatError: action.payload,
+        openChatData: null
       };
     }
     default: {
