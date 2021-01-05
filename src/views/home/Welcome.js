@@ -27,7 +27,7 @@ function Welcome() {
 					</div>
 				</Col>
 				<Col xs={12}>
-					<h1 className="text-white">Soundpair</h1>
+					<h1 className="text-white">Songpair</h1>
 				</Col>
 				<Col xs={8} md={4} lg={2}
 					className="text-white btn btn-primary"
