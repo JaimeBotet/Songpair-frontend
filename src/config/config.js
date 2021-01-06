@@ -16,3 +16,5 @@ export const updatePosURI = apiDomain + "map/update-position";
 export const updateLikeURI = apiDomain + "like/update";
 export const getProfileURI = apiDomain + "profile";
 export const getChatsURI = apiDomain + "chats";
+
+//some dummy comment
