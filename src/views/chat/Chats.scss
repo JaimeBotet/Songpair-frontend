@@ -1,31 +1,26 @@
 .chat {
-  height: 100vh;
+  height: 90vh;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: 1.3em;
   .header {
     color: white;
     height: 20%;
-    .logo {
-      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-      font-size: 1.2em;
-    }
-    .avatar {
-      margin: 10px auto;
+  }
+  .avatar {
+    text-align: center;
+    & img {
       width: 80px;
       border-radius: 100%;
     }
-    .username {
-      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-      margin-left: 1em;
-      font-size: 1.3em;
-    }
   }
-  .menu {
-    color: white;
-    height: 70%;
-    text-align: center;
-    & > * {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+  .username {
+    display: flex;
+    align-content: center;
+    text-align: left;
+    color: #ffffff;
+  }
+  .chat-row {
+    display: flex;
+    align-items: center;
   }
 }
