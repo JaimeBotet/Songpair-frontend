@@ -152,7 +152,6 @@ export function getChats(){
   return async function getUserChatsThunk(dispatch, getState) {
 
     const token = getState().user.currentUser.token;
-    const id = getState().user.currentUser.id;
 
     if (token) {
       dispatch(getChatsRequest());
@@ -170,7 +169,7 @@ export function getChats(){
       .catch((error) => dispatch(getChatsError(error.message)));
 
       if (res.ok) {
-        dispatch(getChatsSuccess(resJson.data.data));
+        dispatch(getChatsSuccess(resJson.data));
       } else {
         dispatch(getChatsError(resJson.error));
       }
