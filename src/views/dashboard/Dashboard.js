@@ -1,4 +1,4 @@
-import { Redirect, Link } from "react-router-dom";
+import { Redirect, Link, useHistory } from "react-router-dom";
 import useUpdateLocation from "../../hooks/useUpdateLocation"
 
 import { ChatLeftDotsFill, GeoFill, Power } from "react-bootstrap-icons"
@@ -11,6 +11,7 @@ function Dashboard({
   currentUserState: { currentUser, isAuthenticated } = {},
   logout, updateUserLocation
 }) {
+  const history = useHistory();
 
   useUpdateLocation(updateUserLocation);
 
@@ -21,7 +22,9 @@ function Dashboard({
 
    // Logout handler
    const logoutHandler = () => {
+    localStorage.removeItem('persist:tfm-songpair');
     logout();
+    history.push(ROUTES.HOME);
   }
 
   return (
