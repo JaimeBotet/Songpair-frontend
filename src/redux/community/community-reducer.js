@@ -66,20 +66,24 @@ const CommunityReducer = (state = CommunityInitialState, action) => {
     case CommunityTypes.GET_CHATS_REQUEST: {
       return {
         ...state,
+        chats: null,
         chatsLoading: true,
+        chatsError: null
       };
     }
     case CommunityTypes.GET_CHATS_SUCCESS: {
       return {
         ...state,
         chatsLoading: false,
-        chats: action.payload
+        chats: action.payload,
+        chatsError: null
       };
     }
     case CommunityTypes.GET_CHATS_ERROR: {
       return {
         ...state,
         chatsLoading: false,
+        chats: null,
         chatsError: action.payload,
       };
     }
