@@ -49,6 +49,7 @@ function ChatRoom({
 
     if(message) {
       setMessages(messages => [ ...messages, {user: "You", text: message} ]);
+      setMessage("");
       socket.emit('sendMessage', { user, room, message } , () => setMessage(''));
     }
   }
