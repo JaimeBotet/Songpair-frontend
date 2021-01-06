@@ -68,7 +68,9 @@ function ChatRoom({
               <div className="btn btn-primary mb-4" onClick={connect}>Join chat</div>
             ) : (
               <>
-                <Messages messages={messages} name={user.name} />
+                <div className="msgContainer">
+                  <Messages messages={messages} name={user.name} />
+                </div>
                 <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
               </>
             )
