@@ -39,10 +39,10 @@ function App() {
           <LoginContainer />
         </Route>
         <Route path={ROUTES.DASHBOARD}>
-          <DashboardContainer />
+          <DashboardContainer/>
         </Route>
         <Route path={ROUTES.PROFILE + ":id"}>
-          <ProfileContainer />
+          <ProfileContainer appSocket={socket} />
         </Route>
         <Route path={ROUTES.MAP}>
           <MapContainer appSocket={socket} />
@@ -54,7 +54,7 @@ function App() {
           <ChatsContainer />
         </Route>
         <Route path={ROUTES.CHAT + ":room"}>
-          <ChatRoomContainer appSocket={socket} />
+          <ChatRoomContainer />
         </Route>
       </Switch>
       { notification &&

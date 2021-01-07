@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Redirect, useParams } from "react-router-dom";
+import { Redirect, useParams, useHistory } from "react-router-dom";
 import useUpdateLocation from "../../hooks/useUpdateLocation"
 
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
@@ -11,10 +11,11 @@ import "./Profile.scss";
 
 function Profile({
   currentUserState: { currentUser, isAuthenticated } = {},
-  communityState: { profile, loadingProfile, profileError } = {},
-  updateUserLocation, getProfile, updateLike, updateProfile
+  communityState: { profile, loadingProfile, profileError, openChatLoading, openChatError, openChatData } = {},
+  updateUserLocation, getProfile, updateLike, updateProfile, openChatRoom, appSocket
 }) {
   const { id } = useParams();
+  const history = useHistory();
 
   useUpdateLocation(updateUserLocation);
 
@@ -26,6 +27,15 @@ function Profile({
     profile.currentSong.like = !profile.currentSong.like;
     await updateLike(profile.currentSong, id);
     updateProfile(id);
+  }
+
+  async function handleChat(){
+    await openChatRoom(id);
+
+    if (openChatData) {
+      appSocket.emit('newChat', {sender: currentUser.name, receiver: id, room: openChatData._id})
+      history.push(ROUTES.CHAT + openChatData._id);
+    }
   }
 
   // Redirect if not logged
@@ -122,7 +132,10 @@ function Profile({
                       </Col>
                     </Row>
                   </Col>
-                  <Col xs={11} className="text-white btn btn-primary w-100">
+                  <Col
+                    xs={11} className="text-white btn btn-primary w-100"
+                    onClick={handleChat}
+                  >
                     Message
                   </Col>
                 </Row>
