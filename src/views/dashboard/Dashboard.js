@@ -21,9 +21,9 @@ function Dashboard({
   }
 
    // Logout handler
-   const logoutHandler = () => {
+   const logoutHandler = async () => {
     localStorage.removeItem('persist:tfm-songpair');
-    logout();
+    await logout();
     history.push(ROUTES.HOME);
   }
 
